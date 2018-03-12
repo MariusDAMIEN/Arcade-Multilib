@@ -5,29 +5,47 @@
 ## 
 ##
 
-NAME	= program
+NAME	= arcade
 
-CC	= 
+SFML	= libsfml.so
+
+LDFLAGS	=	-lsfml
+
+CC	= g++
 
 RM	= rm -f
 
-SRCS	= 
+DIR	= src/
 
-OBJS	= $(SRCS:=.o)
+DIRLIB	= lib/
 
-CFLAGS = -I 
-CFLAGS += -W -Wall -Wextra
+SRCS	= $(DIR)main.cpp
 
-all: $(NAME)
+SRCSSFML	= $(DIRLIB)SFML/sfmlFramework.cpp
+
+OBJS	= $(SRCS:.cpp=.o)
+
+OBJSSFML	= $(SRCSSFML:.cpp=.o)
+
+CXXFLAGS = -I./include
+
+CXXFLAGS += -Wall -Wextra -lsfml-graphics -lsfml-window -lsfml-system -fPIC -std=c++14
+
+all: $(SFML) $(NAME)
+
+$(SFML): $(OBJSSFML)
+	$(CC) $(OBJSSFML) -shared -o $(DIRLIB)$(SFML)
 
 $(NAME): $(OBJS)
-	 $(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
+	 $(CC) $(OBJS) -o $(NAME) -L./lib/ $(LDFLAGS)
 
 clean:
 	$(RM) $(OBJS)
+	$(RM) $(OBJSSFML)
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) $(DIRLIB)$(SFML)
 
 re: fclean all
 

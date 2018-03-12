@@ -5,7 +5,14 @@
 // 
 //
 
-int main(int argc, char **argv)
+#include "SFML/sfmlFramework.hpp"
+
+int main(int ac, char **av)
 {
+	// linked lib
+	sfmlFramework *p = new sfmlFramework();
+
+	(void)ac;
+	(void)av;
 	return 0;
 }
