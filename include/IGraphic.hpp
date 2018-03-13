@@ -20,9 +20,11 @@ public:
 	virtual void time() = 0;
 	virtual void characterName() = 0;
 	virtual void item() = 0;
-	virtual void openWindow() = 0;
+	virtual void createWindow(std::size_t, std::size_t, const std::string &) = 0;
+	virtual bool openWindow() const = 0;
+	virtual void clearWindow() = 0;
 	virtual void destroyWindow() = 0;
-	virtual void getKey() = 0;
+	virtual bool getKey(std::string &) = 0;
 };
 
 #endif /* !_IGRAPHIC_HPP_ */

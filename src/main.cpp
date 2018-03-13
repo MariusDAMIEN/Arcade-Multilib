@@ -5,14 +5,16 @@
 // 
 //
 
+// #include <SFML/Graphics.hpp>
+#include <iostream>
+#include <cctype>
 #include "SFML/sfmlFramework.hpp"
+#include "arcade.hpp"
 
 int main(int ac, char **av)
 {
-	// linked lib
-	sfmlFramework *p = new sfmlFramework();
-
 	(void)ac;
 	(void)av;
+	solarFox();
 	return 0;
 }

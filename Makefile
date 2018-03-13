@@ -19,7 +19,9 @@ DIR	= src/
 
 DIRLIB	= lib/
 
-SRCS	= $(DIR)main.cpp
+SRCS	=	games/solarFox/solarFox.cpp \
+		$(DIR)main.cpp
+		
 
 SRCSSFML	= $(DIRLIB)SFML/sfmlFramework.cpp
 
@@ -34,7 +36,7 @@ CXXFLAGS += -Wall -Wextra -lsfml-graphics -lsfml-window -lsfml-system -fPIC -std
 all: $(SFML) $(NAME)
 
 $(SFML): $(OBJSSFML)
-	$(CC) $(OBJSSFML) -shared -o $(DIRLIB)$(SFML)
+	$(CC) $(OBJSSFML) -shared -o $(DIRLIB)$(SFML) -lsfml-graphics -lsfml-window -lsfml-system
 
 $(NAME): $(OBJS)
 	 $(CC) $(OBJS) -o $(NAME) -L./lib/ $(LDFLAGS)
