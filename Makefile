@@ -20,7 +20,8 @@ DIR	= src/
 DIRLIB	= lib/
 
 SRCS	=	games/solarFox/solarFox.cpp \
-		$(DIR)main.cpp
+		$(DIR)main.cpp	\
+		$(DIR)errorHandling.cpp
 		
 
 SRCSSFML	= $(DIRLIB)SFML/sfmlFramework.cpp
