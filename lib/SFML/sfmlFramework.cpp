@@ -8,6 +8,7 @@
 #include <iostream>
 #include <cctype>
 #include <exception>
+#include <cstddef>
 #include "SFML/sfmlFramework.hpp"
 
 sfmlFramework::sfmlFramework()
@@ -43,6 +44,17 @@ sfmlFramework::sfmlFramework()
 		{"right", sf::Keyboard::Right},
 		{"up", sf::Keyboard::Up},
 		{"down", sf::Keyboard::Down}
+	};
+	_colors = {
+		{"black", sf::Color::Black},
+		{"white", sf::Color::White},
+		{"red", sf::Color::Red},
+		{"green", sf::Color::Green},
+		{"blue", sf::Color::Blue},
+		{"yellow", sf::Color::Yellow},
+		{"magenta", sf::Color::Magenta},
+		{"cyan", sf::Color::Cyan},
+		{"transparent", sf::Color::Transparent}
 	};
 }
 
@@ -114,5 +126,39 @@ void sfmlFramework::_strLower(std::string &str)
 	for (unsigned int i = 0; i < str.length(); ++i)
 		str[i] = tolower(str[i]);
 }
+
+std::unique_ptr<IShape> sfmlFramework::_mySquare(const std::size_t x, const std::size_t y, sf::Color color1, sf::Color color2)
+{
+	// retourner l'objet SfmlSquare avec le l'obj correspondant dans sfml
+	// std::unique_ptr<SfmlSquare> p;
+
+	// SfmlSquare square(sf::Vector2f(x, y), color1);
+
+	(void)color2;
+	// faire le cpp de sfmlSquare
+	// square.setSize(sf::Vector2f(x, y));
+	return std::make_unique<SfmlSquare>(sf::Vector2f(x, y), color1);
+}
+
+std::unique_ptr<IShape> sfmlFramework::drawSquare(const std::size_t x, const std::size_t y, std::string color1, std::string color2)
+{
+	_strLower(color1);
+	_strLower(color2);
+	if (_colors.find(color1) != _colors.end()) {
+		if (_colors.find(color2) != _colors.end())
+			return _mySquare(x, y, _colors[color1], _colors[color2]);
+		else
+			return _mySquare(x, y, _colors[color1], _colors[color1]);
+	} else // color doesn't exist
+		throw std::exception();
+	// return nullptr;
+}
+
+
+
+
+
+
+
 
 

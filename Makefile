@@ -24,7 +24,9 @@ SRCS	=	games/solarFox/solarFox.cpp \
 		$(DIR)errorHandling.cpp
 		
 
-SRCSSFML	= $(DIRLIB)SFML/sfmlFramework.cpp
+SRCSSFML	=	$(DIRLIB)SFML/SfmlSquare.cpp \
+			$(DIRLIB)SFML/sfmlFramework.cpp
+			
 
 OBJS	= $(SRCS:.cpp=.o)
 

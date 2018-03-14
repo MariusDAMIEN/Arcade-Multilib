@@ -8,6 +8,9 @@
 #ifndef _IGRAPHIC_HPP_
 # define _IGRAPHIC_HPP_
 
+#include "memory"
+#include "IShape.hpp"
+
 class IGraphic
 {
 public:
@@ -25,6 +28,7 @@ public:
 	virtual void clearWindow() = 0;
 	virtual void destroyWindow() = 0;
 	virtual bool getKey(std::string &) = 0;
+	virtual std::unique_ptr<IShape> drawSquare(const std::size_t, const std::size_t, std::string, std::string) = 0;
 };
 
 #endif /* !_IGRAPHIC_HPP_ */
