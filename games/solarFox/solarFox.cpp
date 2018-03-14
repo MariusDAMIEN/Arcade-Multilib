@@ -12,13 +12,17 @@ void solarFox()
 {
 	// linked lib
 	IGraphic *p = new sfmlFramework();
-	std::unique_ptr<IShape> pS;
+	std::unique_ptr<IShape> rectangle;
+	// il faut arriver a templater le IShape et la function drawInBuff
+
 
 	p->createWindow(200, 200, "my window");
-	while (p->openWindow()) {
-		pS = p->drawSquare(100, 100, "red", "blue");
+	while (p->isOpenWindow()) {
+		p->clearWindow();
+		rectangle = p->drawRectangle(100, 100, "red", "blue");
 		// obj2 = p->drawSquare(100, 100, "red", "blue");
-		// obj->setPos()
-		p->display();
+		rectangle->setPos(20, 20);
+		p->drawInBuff(*rectangle, "rectangle");
+		p->displayOnWindow();
 	}
 }

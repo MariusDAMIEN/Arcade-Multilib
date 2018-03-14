@@ -17,6 +17,7 @@ public:
 	SfmlSquare(sf::Vector2f, sf::Color);
 	~SfmlSquare();
 	void setPos(int, int) override;
+	sf::RectangleShape getShape();
 private:
 	sf::RectangleShape _rectangle;
 };

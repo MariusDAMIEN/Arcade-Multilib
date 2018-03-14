@@ -21,3 +21,8 @@ void SfmlSquare::setPos(int x, int y)
 {
 	_rectangle.setPosition(x, y);
 }
+
+sf::RectangleShape SfmlSquare::getShape()
+{
+	return _rectangle;
+}

@@ -16,16 +16,16 @@ int main(int ac, char **av)
 {
 	(void)ac;
 	(void)av;
-	if (ac != errHand::ARGS_REQUIRED) {
-		std::cerr << "tu remplacera" << std::endl;
-		return errHand::ERR;
-	}
-	try {
+	// if (ac != errHand::ARGS_REQUIRED) {
+	// 	std::cerr << "tu remplacera" << std::endl;
+	// 	return errHand::ERR;
+	// }
+	// try {
 		solarFox();
 		//jeumoha();
-	} catch (std::exception const &err) {
-		std::cerr << err.what() << std::endl;
-		return errHand::ERR;
-	}
+	// } catch (std::exception const &err) {
+	// 	std::cerr << err.what() << std::endl;
+	// 	return errHand::ERR;
+	// }
 	return errHand::OK;
 }
