@@ -57,5 +57,6 @@ class IGraphic
  protected:
  	std::unordered_map<TYPE, std::pair<std::string, std::unique_ptr<IShape>> > _map
 	};*/
+};
 
 #endif /* !_IGRAPHIC_HPP_ */
