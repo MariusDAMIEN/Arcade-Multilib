@@ -43,13 +43,13 @@ public:
 	// get the key pressed | done
 	bool isKeyPressed(std::string) override;
 	// draw a square | done
-	std::unique_ptr<IShape> drawRectangle(const std::size_t, const std::size_t, std::string, std::string) override;
+	IShape *drawRectangle(const std::size_t, const std::size_t, std::string, std::string) override;
 	// template<typename T>
-	void drawInBuff(IShape &shape, std::string type) override;
+	void drawInBuff(IShape *shape, std::string type) override;
 private:
 	void _strLower(std::string &);
-	std::unique_ptr<IShape> _mySquare(const std::size_t, const std::size_t, sf::Color, sf::Color);
-	sf::RectangleShape _getRectangle();
+	IShape *_mySquare(const std::size_t, const std::size_t, sf::Color, sf::Color);
+	void _getRectangle();
 
 	std::unique_ptr<sf::RenderWindow> _window;
 	sf::Event _event;

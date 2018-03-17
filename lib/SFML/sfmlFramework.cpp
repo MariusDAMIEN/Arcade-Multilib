@@ -62,11 +62,14 @@ sfmlFramework::sfmlFramework()
 	_cast.insert(std::make_pair("rectangle", std::bind(&sfmlFramework::_getRectangle, this)));
 }
 
-sf::RectangleShape sfmlFramework::_getRectangle()
+void sfmlFramework::_getRectangle()
 {
-	SfmlSquare *square = dynamic_cast<SfmlSquare *>(_myShape);
+	SfmlSquare *test = dynamic_cast<SfmlSquare *>(_myShape);
+	// SfmlSquare *square = dynamic_cast<SfmlSquare *>(_myShape);
 
-	_rectangle = square->getShape();
+	// // // _rectangle = square->getShape();
+	// _window->draw(square->getShape());
+	_window->draw(test->getShape());
 }
 
 sfmlFramework::~sfmlFramework()
@@ -139,15 +142,15 @@ void sfmlFramework::_strLower(std::string &str)
 		str[i] = tolower(str[i]);
 }
 
-std::unique_ptr<IShape> sfmlFramework::_mySquare(const std::size_t x, const std::size_t y, sf::Color color1, sf::Color color2)
+IShape *sfmlFramework::_mySquare(const std::size_t x, const std::size_t y, sf::Color color1, sf::Color color2)
 {
 	(void)color2;
 	// faire le cpp de sfmlSquare
 	// square.setSize(sf::Vector2f(x, y));
-	return std::make_unique<SfmlSquare>(sf::Vector2f(x, y), color1);
+	return new SfmlSquare(sf::Vector2f(x, y), color1);
 }
 
-std::unique_ptr<IShape> sfmlFramework::drawRectangle(const std::size_t x, const std::size_t y, std::string color1, std::string color2)
+IShape *sfmlFramework::drawRectangle(const std::size_t x, const std::size_t y, std::string color1, std::string color2)
 {
 	_strLower(color1);
 	_strLower(color2);
@@ -165,15 +168,17 @@ std::unique_ptr<IShape> sfmlFramework::drawRectangle(const std::size_t x, const 
 // transformer shape dans la forme souhaitée
 // template<typename T>
 // ou sinon faire un tableau de poiteur sur fonction de facon a bien caster ..
-void sfmlFramework::drawInBuff(IShape &shape, std::string type)
+void sfmlFramework::drawInBuff(IShape *shape, std::string type)
 {
-	// SfmlSquare *test = dynamic_cast<SfmlSquare *>(&shape);
-	_myShape = &shape;
+	// SfmlSquare *test = dynamic_cast<SfmlSquare *>(shape);
 
-	_cast["rectangle"]();
+	_myShape = shape;
+
+	_cast[type]();
 
 	//faire _window->draw dans la function _getRectangle !!!!!!
-	// _window->draw(_rectangle);
+	// _window->draw(test->getShape());
+	// c'est le pointeur sur fonction qui beug
 }
 
 

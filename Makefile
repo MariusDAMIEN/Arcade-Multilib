@@ -42,7 +42,7 @@ OBJSSOLAR	= $(SRCSSOLAR:.cpp=.o)
 
 CXXFLAGS = -I./include
 
-CXXFLAGS += -Wall -Wextra -lsfml-graphics -lsfml-window -lsfml-system -fPIC -std=c++14
+CXXFLAGS += -Wall -Wextra -lsfml-graphics -lsfml-window -lsfml-system -fPIC -std=c++14 -g3
 
 all: graphicals games core
 
