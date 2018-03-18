@@ -47,13 +47,18 @@ class IGraphic
  	};
 
  	virtual ~IGraphic() = default;
- 	virtual bool createWindow(std::pair size, std::string name) = 0;
- 	// erease all of window
- 	virtual bool clearWindow() = 0;
- 	virtual IShape createArea(std::pair size, std::pair possition, std::string name, ) = 0;
- 	virtual bool loop(void (*func)(void)) = 0;
- 	virtual isKeyPressed(std::string key) = 0;
- 	virtual bool displayObj() = 0;
+	virtual	bool createWindow(std::pair<int, int> size, std::string name) override;
+		// erease all of window
+	virtual	bool clearWindow() override;
+	virtual	bool createArea(std::pair<int, int> size, std::pair<int, int> pos
+				  , std::string name, ) override;
+	virtual	bool loop(void (*func)(void)) override;
+	virtual	std::pair<int, int> getpos(std::string name);
+	virtual	bool setpos(std::pair<int, int> pos, std::string name);
+	virtual	std::pair<int, int> getdim(std::string name);
+	virtual	bool setdim(std::pair<int, int> dim, std::string name);
+	virtual	bool isKeyPressed(std::string key) override;
+	virtual	bool displayObj() override;
  protected:
  	std::unordered_map<TYPE, std::pair<std::string, std::unique_ptr<IShape>> > _map
 	};*/
