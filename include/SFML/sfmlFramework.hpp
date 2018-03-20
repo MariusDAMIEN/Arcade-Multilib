@@ -17,64 +17,59 @@
 #include "IGraphic.hpp"
 #include "SFML/SfmlSquare.hpp"
 
+typedef std::function<void (std::pair<int, int>, std::pair<int, int>,
+		std::pair<std::string, std::string>, IGraphic::TYPE)> argsArea;
+
 class sfmlFramework : public IGraphic
 {
 public:
-	// sfmlFramework();
-	// ~sfmlFramework();
-	// // display all result at end and this is for update
-	// void displayOnWindow() override;
-	// // destroy all obj
-	// void destroy() override;
-	// void character() override;
-	// void wall() override;
-	// void score() override;
-	// void time() override;
-	// void characterName() override;
-	// void item() override;
-	// // init the window | done
-	// void createWindow(std::size_t, std::size_t, const std::string &) override;
-	// // open that winwow | done
-	// bool isOpenWindow() const override;
-	// // clear that window | done
-	// void clearWindow() override;
-	// // destroy that window
-	// void destroyWindow() override;
-	// // get the key pressed | done
-	// bool isKeyPressed(std::string) override;
-	// // draw a square | done
-	// IShape *drawRectangle(const std::size_t, const std::size_t, std::string, std::string) override;
-	// // template<typename T>
-	// void drawInBuff(IShape *shape, std::string type) override;
 
 	sfmlFramework();
 	~sfmlFramework();
-	bool createWindow(std::pair<int, int> size, std::string name) override;
+	bool createWindow(std::pair<int, int> dim, std::string name) override;
 		// erease all of window
 	bool clearWindow() override;
-	bool createArea(std::pair<int, int> size, std::pair<int, int> pos,
-		std::string name, IGraphic::TYPE type) override;
+	bool createArea(std::pair<int, int> dim, std::pair<int, int> pos,
+		std::pair<std::string, std::string> nameTex, TYPE type) override;
 	bool loop(void (*func)(void)) override;
 	std::pair<int, int> getpos(std::string name) override;
-	bool setpos(std::pair<int, int> pos, std::string name) override;
 	std::pair<int, int> getdim(std::string name) override;
+	bool setpos(std::pair<int, int> pos, std::string name) override;
 	bool setdim(std::pair<int, int> dim, std::string name) override;
 	bool isKeyPressed(std::string key) override;
 	bool displayObj() override;
-
+	bool deleteArea(std::string name) override;
+	bool changeTexture(std::string name, std::string path) override;
+	bool destroyWindow() override;
 private:
-	// void _strLower(std::string &);
-	// IShape *_mySquare(const std::size_t, const std::size_t, sf::Color, sf::Color);
-	// void _getRectangle();
+	void _strLower(std::string &str);
+	void _rectangle(std::pair<int, int> dim, std::pair<int, int> pos,
+		std::pair<std::string, std::string> nameTex, TYPE type);
+	template<class T>
+	std::pair<int, int> _getPosT(std::string);
+	template<class T>
+	std::pair<int, int> _getDimT(std::string);
+	template<class T>
+	bool _setPosT(std::pair<int, int> pos, std::string name);
+	template<class T>
+	bool _setDimT(std::pair<int, int> dim, std::string name);
+	template<class T>
+	bool _displayRec(std::string name);
 
-	// std::unique_ptr<sf::RenderWindow> _window;
-	// sf::Event _event;
-	// std::unordered_map<std::string, sf::Keyboard::Key> _key;
-	// std::unordered_map<std::string, sf::Color> _colors;
-	// std::unordered_map<std::string, std::function<void (void)> > _cast;
-	// IShape *_myShape;
-	// sf::RectangleShape _rectangle;
+	std::unique_ptr<sf::RenderWindow> _window;
+	std::unordered_map<std::string, sf::Keyboard::Key> _keys;
+	std::unordered_map<std::string, sf::Event::EventType> _keys2;
+	sf::Event _event;
 
+	std::unordered_map<std::string, std::pair<int, int>> _mapDim;
+	std::unordered_map<std::string, std::pair<int, int>> _mapPos;
+	std::unordered_map<std::string, std::string> _mapTex;
+	std::unordered_map<std::string, IGraphic::TYPE> _mapType;
+	// pour displayObj
+	std::unordered_map<std::string, IShape *> _mapDownCast;
+	std::unordered_map<int, argsArea> _pointerFunc;
+	// pour displayObj
+	// std::unordered_map<int, std::function<void (std::string)> > _downCast;
 
 };
 
