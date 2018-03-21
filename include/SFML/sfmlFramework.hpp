@@ -16,6 +16,7 @@
 #include <iostream>
 #include "IGraphic.hpp"
 #include "SFML/SfmlSquare.hpp"
+#include "SFML/SfmlManageSprite.hpp"
 
 typedef std::function<void (std::pair<int, int>, std::pair<int, int>,
 		std::pair<std::string, std::string>, IGraphic::TYPE)> argsArea;
@@ -55,22 +56,25 @@ private:
 	bool _setDimT(std::pair<int, int> dim, std::string name);
 	template<class T>
 	bool _displayRec(std::string name);
+	void _makeSpriteTex(std::pair<int, int> dim, std::pair<int, int> pos,
+		std::pair<std::string, std::string> nameTex, TYPE type);
 
 	std::unique_ptr<sf::RenderWindow> _window;
 	std::unordered_map<std::string, sf::Keyboard::Key> _keys;
 	std::unordered_map<std::string, sf::Event::EventType> _keys2;
+	std::unordered_map<std::string, sf::Color> _colors;
 	sf::Event _event;
 
 	std::unordered_map<std::string, std::pair<int, int>> _mapDim;
 	std::unordered_map<std::string, std::pair<int, int>> _mapPos;
 	std::unordered_map<std::string, std::string> _mapTex;
-	std::unordered_map<std::string, IGraphic::TYPE> _mapType;
+	std::unordered_map<std::string, int> _mapType;
 	// pour displayObj
 	std::unordered_map<std::string, IShape *> _mapDownCast;
 	std::unordered_map<int, argsArea> _pointerFunc;
 	// pour displayObj
 	// std::unordered_map<int, std::function<void (std::string)> > _downCast;
-
+// pour le type: sprite le framework doit savoir que ca correspond a -1
 };
 
 // extern "C" void libsf()

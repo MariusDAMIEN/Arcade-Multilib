@@ -17,6 +17,10 @@ class IGraphic
 {
  public:
 	//nouvelle interface
+
+	// pour createArea il faut verifier le deuxieme parametre de nameTex
+	// si il a un nom de couleur ex: red, green il faut faire une forme
+	// sinon il faut faire une sprite avec texture
  	enum TYPE {
  		RECT,
  		CICLE,

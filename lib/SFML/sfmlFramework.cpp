@@ -96,6 +96,17 @@ sfmlFramework::sfmlFramework()
 		{"up", sf::Keyboard::Up},
 		{"down", sf::Keyboard::Down}
 	};
+	_colors = {
+		{"black", sf::Color::Black},
+		{"white", sf::Color::White},
+		{"red", sf::Color::Red},
+		{"green", sf::Color::Green},
+		{"blue", sf::Color::Blue},
+		{"yellow", sf::Color::Yellow},
+		{"magenta", sf::Color::Magenta},
+		{"cyan", sf::Color::Cyan},
+		{"transparent", sf::Color::Transparent}
+	};
 	_keys2 = {
 		{"close", sf::Event::Closed},
 		{"resize", sf::Event::Resized}
@@ -124,16 +135,6 @@ bool sfmlFramework::clearWindow()
 	return true;
 }
 
-bool sfmlFramework::createArea(std::pair<int, int> dim, std::pair<int, int> pos,
-	std::pair<std::string, std::string> nameTex, IGraphic::TYPE type)
-{
-	if (_mapType.find(nameTex.first) == _mapType.end())
-		_pointerFunc[type](dim, pos, nameTex, type);
-	else
-		throw errHand::Error("This area is already created");
-	return true;
-}
-
 void sfmlFramework::_rectangle(std::pair<int, int> dim, std::pair<int, int> pos,
 	std::pair<std::string, std::string> nameTex, TYPE type)
 {
@@ -145,6 +146,34 @@ void sfmlFramework::_rectangle(std::pair<int, int> dim, std::pair<int, int> pos,
 	_mapType[nameTex.first] = type;
 	tmp->setPos(pos.first, pos.second);
 	_mapDownCast[nameTex.first] = tmp;
+}
+
+void sfmlFramework::_makeSpriteTex(std::pair<int, int> dim, std::pair<int, int> pos,
+	std::pair<std::string, std::string> nameTex, TYPE type)
+{
+	SfmlManageSprite *tmp = new SfmlManageSprite(nameTex.second, dim, pos);
+
+	(void)type;
+	_mapDim[nameTex.first] = dim;
+	_mapPos[nameTex.first] = pos;
+	_mapTex[nameTex.first] = nameTex.second;
+	_mapType[nameTex.first] = -1;
+	tmp->setPos(pos.first, pos.second);
+	_mapDownCast[nameTex.first] = tmp;
+}
+
+bool sfmlFramework::createArea(std::pair<int, int> dim, std::pair<int, int> pos,
+	std::pair<std::string, std::string> nameTex, IGraphic::TYPE type)
+{
+	if (_mapType.find(nameTex.first) == _mapType.end() &&
+		(_colors.find(nameTex.second) != _colors.end() ||
+			type == IGraphic::TYPE::TEXT))
+		_pointerFunc[type](dim, pos, nameTex, type);
+	else if (_mapType.find(nameTex.first) == _mapType.end())
+		_makeSpriteTex(dim, pos, nameTex, type); //faire le pointer sur func texSprit
+	else
+		throw errHand::Error("This area is already created");
+	return true;
 }
 
 bool sfmlFramework::loop(void (*func)(void))
