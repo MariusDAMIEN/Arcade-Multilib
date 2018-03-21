@@ -328,8 +328,14 @@ bool sfmlFramework::deleteArea(std::string name)
 
 bool sfmlFramework::changeTexture(std::string name, std::string path)
 {
-	if (_mapTex.find(name) != _mapTex.end())
-		_mapTex[name] = path;
+	if (_mapTex.find(name) != _mapTex.end()) {
+		if ((_mapType[name] == -1 && _colors.find(path) == _colors.end()) ||
+			_mapType[name] != -1 && _colors.find(path) != _colors.end())
+			_mapTex[name] = path;
+		else
+			throw errHand::Error("changeTexture: you can't change
+				color in texture or texture in color");
+	}
 	else
 		throw errHand::Error("changeTexture: obj doesn't exist in map");
 	return true;
