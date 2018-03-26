@@ -10,57 +10,43 @@
 
 #include <memory>
 #include <unordered_map>
-#include "IShape.hpp"
 #include <utility>
+// #include "IShape.hpp"
 
-// template<class T>
-namespace lib {
-	class IGraphic
-	{
-	public:
-		// virtual ~IGraphic() = default;
-		// virtual void displayOnWindow() = 0;
-		// virtual void destroy() = 0;
-		// virtual void character() = 0;
-		// virtual void wall() = 0;
-		// virtual void score() = 0;
-		// virtual void time() = 0;
-		// virtual void characterName() = 0;
-		// virtual void item() = 0;
-		// virtual void createWindow(std::size_t, std::size_t, const std::string &) = 0;
-		// virtual bool isOpenWindow() const = 0;
-		// virtual void clearWindow() = 0;
-		// virtual void destroyWindow() = 0;
-		// virtual bool isKeyPressed(std::string) = 0;
-		// virtual IShape *drawRectangle(const std::size_t, const std::size_t, std::string, std::string) = 0;
-		// // template<typename T2>
-		// virtual void drawInBuff(IShape *shape, std::string) = 0;
+class IGraphic
+{
+ public:
+	//nouvelle interface
 
-		//nouvelle interface
-		enum TYPE {
-			RECT,
-			CICLE,
-			CHARAC,
-			ENEMY,
-			TEXT,
-			ITEM,
-			OBSTACLE
-		};
+	// pour createArea il faut verifier le deuxieme parametre de nameTex
+	// si il a un nom de couleur ex: red, green il faut faire une forme
+	// sinon il faut faire une sprite avec texture
+ 	enum TYPE {
+ 		RECT,
+ 		CICLE,
+ 		CHARAC,
+ 		ENEMY,
+		TEXT,
+		ITEM,
+		OBSTACLE
+ 	};
 
-		virtual ~IGraphic() = default;
-		virtual	bool createWindow(std::pair<int, int> size, std::string name);
+ 	virtual ~IGraphic() = default;
+	virtual	bool createWindow(std::pair<int, int> dim, std::string name) = 0;
 		// erease all of window
-		virtual	bool clearWindow();
-		virtual	bool createArea(std::pair<int, int> size, std::pair<int, int> pos,
-					std::string name, TYPE type);
-		virtual	bool loop(void (*func)(void)) override;
-		virtual	std::pair<int, int> getpos(std::string name);
-		virtual	bool setpos(std::pair<int, int> pos, std::string name);
-		virtual	std::pair<int, int> getdim(std::string name);
-		virtual	bool setdim(std::pair<int, int> dim, std::string name);
-		virtual	bool isKeyPressed(std::string key) override;
-		virtual	bool displayObj() override;
-	};
-}
+	virtual	bool clearWindow() = 0;
+	virtual	bool createArea(std::pair<int, int> dim, std::pair<int, int> pos,
+		std::pair<std::string, std::string> nameTex, TYPE type) = 0;
+	virtual	bool loop(void (*func)(void)) = 0;
+	virtual	std::pair<int, int> getpos(std::string name) = 0;
+	virtual	std::pair<int, int> getdim(std::string name) = 0;
+	virtual	bool setpos(std::pair<int, int> pos, std::string name) = 0;
+	virtual	bool setdim(std::pair<int, int> dim, std::string name) = 0;
+	virtual	bool isKeyPressed(std::string key) = 0;
+	virtual	bool displayObj() = 0;
+	virtual	bool deleteArea(std::string name) = 0;
+	virtual bool changeTexture(std::string name, std::string path) = 0;
+	virtual bool destroyWindow() = 0;
+};
 
 #endif /* !_IGRAPHIC_HPP_ */

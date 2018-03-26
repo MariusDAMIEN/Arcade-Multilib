@@ -29,8 +29,10 @@ SRCS	=	$(DIR)main.cpp	\
 		$(DIR)errorHandling.cpp
 		
 
-SRCSSFML	=	$(DIRLIB)SFML/SfmlSquare.cpp \
-			$(DIRLIB)SFML/sfmlFramework.cpp
+SRCSSFML	=	$(DIRLIB)SFML/sfmlFramework.cpp	\
+			$(DIR)errorHandling.cpp	\
+			$(DIRLIB)SFML/SfmlSquare.cpp	\
+			$(DIRLIB)SFML/SfmlManageSprite.cpp
 
 SRCSSOLAR	=	games/solarFox/solarFox.cpp
 
