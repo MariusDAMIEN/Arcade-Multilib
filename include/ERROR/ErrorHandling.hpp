@@ -13,6 +13,8 @@
 
 namespace errHand {
 
+	#undef ERR
+	#undef OK
 	const char ERR = 84;
 	const char OK = 0;
 	const char ARGS_REQUIRED = 2;
