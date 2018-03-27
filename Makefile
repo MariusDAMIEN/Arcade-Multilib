@@ -34,6 +34,8 @@ SRCS	=	$(DIR)main.cpp	\
 SRCSSFML	=	$(DIRLIB)SFML/sfmlFramework.cpp	\
 			$(DIR)errorHandling.cpp	\
 			$(DIRLIB)SFML/SfmlSquare.cpp	\
+			$(DIRLIB)SFML/SfmlText.cpp	\
+			$(DIRLIB)SFML/SfmlCircle.cpp	\
 			$(DIRLIB)SFML/SfmlManageSprite.cpp
 
 SRCSSOLAR	=	games/solarFox/solarFox.cpp

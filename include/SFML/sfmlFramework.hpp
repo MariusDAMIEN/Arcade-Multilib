@@ -16,6 +16,7 @@
 #include <iostream>
 #include "IGraphic.hpp"
 #include "SFML/SfmlSquare.hpp"
+#include "SFML/SfmlText.hpp"
 #include "SFML/SfmlManageSprite.hpp"
 
 typedef std::function<void (std::pair<int, int>, std::pair<int, int>,
@@ -46,6 +47,10 @@ private:
 	void _strLower(std::string &str);
 	void _rectangle(std::pair<int, int> dim, std::pair<int, int> pos,
 		std::pair<std::string, std::string> nameTex, TYPE type);
+	void _text(std::pair<int, int> dim, std::pair<int, int> pos,
+		std::pair<std::string, std::string> nameTex, TYPE type);
+	void _circle(std::pair<int, int> dim, std::pair<int, int> pos,
+		std::pair<std::string, std::string> nameTex, TYPE type);
 	template<class T>
 	std::pair<int, int> _getPosT(std::string);
 	template<class T>
@@ -55,7 +60,7 @@ private:
 	template<class T>
 	bool _setDimT(std::pair<int, int> dim, std::string name);
 	template<class T>
-	bool _displayRec(std::string name);
+	bool _displayObjSfml(std::string name);
 	void _makeSpriteTex(std::pair<int, int> dim, std::pair<int, int> pos,
 		std::pair<std::string, std::string> nameTex, TYPE type);
 
