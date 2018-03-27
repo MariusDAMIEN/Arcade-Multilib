@@ -7,6 +7,7 @@
 
 #ifndef _SFMLMANAGESPRITE_
 # define _SFMLMANAGESPRITE_
+# define PATH_IMG "assets/"
 
 #include <SFML/Graphics.hpp>
 #include <iostream>

@@ -39,15 +39,17 @@ int launcher::load_first_lib()
 
 bool launcher::loop()
 {
+	char marius[11] = "trop fort\n";
+
 	_igraph->createArea(std::make_pair(200, 200), std::make_pair(10, 10)
-			    , std::make_pair("test", "red"), IGraphic::TYPE::RECT);
-	_igraph->createArea(std::make_pair(200, 200), std::make_pair(10, 10)
-			    , std::make_pair("Name", "red"), IGraphic::TYPE::TEXT);
+			    , std::make_pair(marius, "blue"), IGraphic::TYPE::RECT);
+	_igraph->createArea(std::make_pair(50, 200), std::make_pair(300, 10)
+			    , std::make_pair("Name", "trop fort chieffff marius"), IGraphic::TYPE::TEXT);
 	while (1) {
-		_igraph->displayObj();
 		if (_igraph->isKeyPressed("escape") == true)
 			exit(6);
-		
+		_igraph->clearWindow();
+		_igraph->displayObj();
 	}
 }
 
