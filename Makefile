@@ -28,8 +28,10 @@ DIRLIB	= lib/
 DIRGAME	= games/
 
 SRCS	=	$(DIR)main.cpp	\
-		$(DIR)errorHandling.cpp
-		
+		$(DIR)launcher.cpp	\
+		$(DIR)SmartPointer/SmartPointer.cpp	\
+		$(DIR)errorHandling.cpp	\
+
 
 SRCSSFML	=	$(DIRLIB)SFML/sfmlFramework.cpp	\
 			$(DIR)errorHandling.cpp	\
@@ -71,7 +73,7 @@ $(NCURSE): $(OBJSNCURSE)
 	$(CC) $(OBJSNCURSE) -shared -o $(DIRLIB)$(NCURSE) -lncurses
 
 $(NAME): $(OBJS)
-	 $(CC) $(OBJS) -o $(NAME) -L./lib/ $(LDFLAGS)  -L./games/ $(LDFLAGSGAME)
+	 $(CC) $(OBJS) -o $(NAME) -ldl -L./lib/ $(LDFLAGS)  -L./games/ $(LDFLAGSGAME)
 
 clean:
 	$(RM) $(OBJS)

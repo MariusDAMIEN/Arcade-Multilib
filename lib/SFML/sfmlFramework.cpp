@@ -176,11 +176,11 @@ bool sfmlFramework::createArea(std::pair<int, int> dim, std::pair<int, int> pos,
 	return true;
 }
 
-bool sfmlFramework::loop(void (*func)(void))
+/*bool sfmlFramework::loop(void (*func)(void))
 {
 	while (true)
 		func();
-}
+		}*/
 
 template<class T>
 std::pair<int, int> sfmlFramework::_getPosT(std::string name)
@@ -333,7 +333,7 @@ bool sfmlFramework::changeTexture(std::string name, std::string path)
 			_mapType[name] != -1 && _colors.find(path) != _colors.end())
 			_mapTex[name] = path;
 		else
-			throw errHand::Error("changeTexture: you can't change
+			throw errHand::Error("changeTexture: you can't change\
 				color in texture or texture in color");
 	}
 	else
@@ -345,4 +345,12 @@ bool sfmlFramework::destroyWindow()
 {
 	_window->close();
 	return true;
+}
+
+extern "C" IGraphic* create() {
+	return new sfmlFramework();
+}
+
+extern "C" void destroy(IGraphic* p) {
+	delete p;
 }
