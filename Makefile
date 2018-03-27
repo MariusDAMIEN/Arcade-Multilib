@@ -26,8 +26,10 @@ DIRLIB	= lib/
 DIRGAME	= games/
 
 SRCS	=	$(DIR)main.cpp	\
-		$(DIR)errorHandling.cpp
-		
+		$(DIR)launcher.cpp	\
+		$(DIR)SmartPointer/SmartPointer.cpp	\
+		$(DIR)errorHandling.cpp	\
+
 
 SRCSSFML	=	$(DIRLIB)SFML/sfmlFramework.cpp	\
 			$(DIR)errorHandling.cpp	\
@@ -44,7 +46,7 @@ OBJSSOLAR	= $(SRCSSOLAR:.cpp=.o)
 
 CXXFLAGS = -I./include
 
-CXXFLAGS += -Wall -Wextra -lsfml-graphics -lsfml-window -lsfml-system -fPIC -std=c++14 -g3
+CXXFLAGS += -Wall -Wextra -lsfml-graphics -lsfml-window -lsfml-system -fPIC -std=c++14 -g3 -ldl
 
 all: graphicals games core
 
@@ -61,7 +63,7 @@ $(SFML): $(OBJSSFML)
 	$(CC) $(OBJSSFML) -shared -o $(DIRLIB)$(SFML) -lsfml-graphics -lsfml-window -lsfml-system
 
 $(NAME): $(OBJS)
-	 $(CC) $(OBJS) -o $(NAME) -L./lib/ $(LDFLAGS)  -L./games/ $(LDFLAGSGAME)
+	 $(CC) $(OBJS) -o $(NAME) -ldl -L./lib/ $(LDFLAGS)  -L./games/ $(LDFLAGSGAME)
 
 clean:
 	$(RM) $(OBJS)

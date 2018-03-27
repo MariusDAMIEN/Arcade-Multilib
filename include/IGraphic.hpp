@@ -37,7 +37,7 @@ class IGraphic
 	virtual	bool clearWindow() = 0;
 	virtual	bool createArea(std::pair<int, int> dim, std::pair<int, int> pos,
 		std::pair<std::string, std::string> nameTex, TYPE type) = 0;
-	virtual	bool loop(void (*func)(void)) = 0;
+//	virtual	bool loop(void (*func)(void)) = 0;
 	virtual	std::pair<int, int> getpos(std::string name) = 0;
 	virtual	std::pair<int, int> getdim(std::string name) = 0;
 	virtual	bool setpos(std::pair<int, int> pos, std::string name) = 0;

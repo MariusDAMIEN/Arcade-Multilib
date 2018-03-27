@@ -7,10 +7,11 @@
 
 // #include <SFML/Graphics.hpp>
 #include <iostream>
-#include <cctype>
 #include "SFML/sfmlFramework.hpp"
 #include "arcade.hpp"
 #include "ERROR/ErrorHandling.hpp"
+
+int launch(char *lib);
 
 int main(int ac, char **av)
 {
@@ -21,7 +22,7 @@ int main(int ac, char **av)
 	// 	return errHand::ERR;
 	// }
 	// try {
-		solarFox();
+	launch(av[1]);
 		//jeumoha();
 	// } catch (std::exception const &err) {
 	// 	std::cerr << err.what() << std::endl;
