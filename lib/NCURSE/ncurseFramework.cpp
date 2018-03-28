@@ -96,13 +96,6 @@ bool ncurseFramework::clearWindow()
 	return true;
 }
 
-bool ncurseFramework::loop(void (*func)(void))
-{
-	while (true)
-		func();
-	return true;
-}
-
 bool ncurseFramework::isKeyPressed(std::string key)
 {
 	_strLower(key);
@@ -186,4 +179,12 @@ bool ncurseFramework::destroyWindow()
 {
 	endwin();
 	return true;
+}
+
+extern "C" IGraphic* create() {
+	return new ncurseFramework();
+}
+
+extern "C" void destroy(IGraphic* p) {
+	delete p;
 }

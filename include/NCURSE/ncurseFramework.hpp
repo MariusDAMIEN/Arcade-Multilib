@@ -42,7 +42,7 @@ public:
 	bool clearWindow() override;
 	bool createArea(std::pair<int, int>, std::pair<int, int>,
 		std::pair<std::string, std::string>, TYPE) override;
-	bool loop(void (*func)(void)) override;
+//	bool loop(void (*func)(void)) override;
 	std::pair<int, int> getpos(std::string) override;
 	std::pair<int, int> getdim(std::string) override;
 	bool setpos(std::pair<int, int>, std::string) override;

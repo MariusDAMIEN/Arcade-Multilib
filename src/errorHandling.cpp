@@ -6,7 +6,7 @@
 */
 
 
-#include "ERROR/ErrorHandling.hpp"
+#include "../include/ERROR/ErrorHandling.hpp"
 
 const char* errHand::Error::what() const throw()
 {

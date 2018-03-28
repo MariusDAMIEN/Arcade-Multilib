@@ -37,17 +37,35 @@ int launcher::load_first_lib()
 	return (0);
 }
 
+void launcher::change_lib(const char *dir_name)
+{
+	DIR *dir = opendir(dir_name);
+	struct dirent *entry;
+	struct stat info;
+
+	if (!dir)
+		throw errHand::Error("Directory was not found\n");
+	while ((entry = readdir(dir)) != NULL) {
+		std::string str(entry->d_name);
+		if(str.substr(str.find_last_of(".") + 1) == "so") {
+
+			std::string path = std::string(dir_name) + '/' + std::string(entry->d_name);
+			std::cout << "Entry : " << path << std::endl;
+		}
+	}
+	closedir(dir);
+
+}
+
 bool launcher::loop()
 {
+	change_lib("./lib");
 	_igraph->createArea(std::make_pair(200, 200), std::make_pair(10, 10)
-			    , std::make_pair("test", "red"), IGraphic::TYPE::RECT);
-	_igraph->createArea(std::make_pair(200, 200), std::make_pair(10, 10)
-			    , std::make_pair("Name", "red"), IGraphic::TYPE::TEXT);
+			    , std::make_pair("test", "blue"), IGraphic::TYPE::RECT);
 	while (1) {
 		_igraph->displayObj();
-		if (_igraph->isKeyPressed("escape") == true)
-			exit(6);
-		
+//		if (_igraph->isKeyPressed("escape") == true)
+//		 	exit(5);
 	}
 }
 

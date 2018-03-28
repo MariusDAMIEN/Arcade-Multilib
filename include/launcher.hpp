@@ -11,6 +11,8 @@
 #include <cctype>
 #include <dlfcn.h>
 #include <unistd.h>
+#include <sys/stat.h>
+#include <dirent.h>
 #include "IGraphic.hpp"
 #include "arcade.hpp"
 #include "SmartPointer.hpp"
@@ -25,6 +27,7 @@ public:
 	int load_first_lib();
 	void windowcreation();
 	bool loop();
+	void change_lib(const char *lib);
 
 private:
 	std::string _lib;
