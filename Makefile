@@ -57,7 +57,6 @@ CXXFLAGS = -I./include
 
 CXXFLAGS += -Wall -Wextra -lsfml-graphics -lsfml-window -lsfml-system -fPIC -std=c++14 -g3 -lncurses -Wfatal-errors
 
-
 all: graphicals games core
 
 graphicals: $(SFML) $(NCURSE)
