@@ -48,18 +48,16 @@ void launcher::change_lib(const char *dir_name)
 	while ((entry = readdir(dir)) != NULL) {
 		std::string str(entry->d_name);
 		if(str.substr(str.find_last_of(".") + 1) == "so") {
-
 			std::string path = std::string(dir_name) + '/' + std::string(entry->d_name);
 			std::cout << "Entry : " << path << std::endl;
+			_vectLib.push_back(path);
 		}
 	}
 	closedir(dir);
-
 }
 
 bool launcher::loop()
 {
-<<<<<<< HEAD
 	change_lib("./lib");
 	_igraph->createArea(std::make_pair(200, 200), std::make_pair(10, 10)
 			    , std::make_pair("test", "blue"), IGraphic::TYPE::RECT);
