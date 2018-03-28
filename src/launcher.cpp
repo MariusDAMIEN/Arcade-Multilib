@@ -59,6 +59,7 @@ void launcher::change_lib(const char *dir_name)
 
 bool launcher::loop()
 {
+<<<<<<< HEAD
 	change_lib("./lib");
 	_igraph->createArea(std::make_pair(200, 200), std::make_pair(10, 10)
 			    , std::make_pair("test", "blue"), IGraphic::TYPE::RECT);
