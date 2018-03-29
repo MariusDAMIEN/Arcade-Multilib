@@ -63,10 +63,4 @@ private:
 	char** _mainWin;
 };
 
-extern "C" IGraphic *create()
-{
- return (new ncurseFramework());
-}
-
-
 #endif /* !_NCURSEFRAMEWORK_HPP_ */

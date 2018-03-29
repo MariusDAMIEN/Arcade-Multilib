@@ -125,8 +125,6 @@ bool ncurseFramework::clearWindow()
 	printWin();
 	_ch = getch();
 	refresh();
-	for (unsigned int i = 0; i < _areasVec.size(); ++i)
-        	wrefresh(_areasVec[i]->_win);
 	return true;
 }
 
@@ -233,7 +231,7 @@ bool ncurseFramework::displayObj()
 	return true;
 }
 
-extern "C" IGraphic* create() {
+extern "C" IGraphic *create() {
 	return new ncurseFramework();
 }
 

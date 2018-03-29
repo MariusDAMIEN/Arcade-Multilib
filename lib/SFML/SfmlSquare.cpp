@@ -12,6 +12,7 @@ SfmlSquare::SfmlSquare(sf::Vector2f vec, sf::Color color)
 	_rectangle.setSize(vec);
 	_rectangle.setOutlineColor(color);
 	_rectangle.setOutlineThickness(3);
+	_rectangle.setFillColor(sf::Color::Transparent);
 }
 
 SfmlSquare::~SfmlSquare()

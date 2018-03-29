@@ -25,8 +25,7 @@ private:
 	std::ifstream _file;
 	bool start_parse();
 	bool open();
-
-	std::unordered_map< std::string, std::pair<int, int>  > _dim;	
+	std::unordered_map< std::string, std::pair<int, int>  > _dim;
 };
 
 #endif /* !_PARSER_HPP_ */

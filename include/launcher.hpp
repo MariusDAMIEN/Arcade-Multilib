@@ -13,6 +13,8 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <dirent.h>
+#include <vector>
+#include <algorithm>
 #include "IGraphic.hpp"
 #include "arcade.hpp"
 #include "SmartPointer.hpp"
@@ -27,10 +29,15 @@ public:
 	int load_first_lib();
 	void windowcreation();
 	bool loop();
+	void load_game(const char *lib);
 	void change_lib(const char *lib);
-
 private:
+	void next_lib();
 	std::string _lib;
+	std::vector<std::string> _vectLib;
+	std::vector<std::string> _vectGame;
+	std::vector<std::string>::iterator _libIt;
+	std::pair<int, int> _select;
         void const * _handle;
 	IGraphic *_igraph;
 };

@@ -11,7 +11,7 @@ SFML	= lib_arcade_sfml.so
 
 NCURSE	= lib_arcade_ncurse.so
 
-SOLARFOX	= lib_arcade_solarfox.so
+SOLARFOX = lib_arcade_solarfox.so
 
 LDFLAGS	=	-l_arcade_sfml -l_arcade_ncurse
 

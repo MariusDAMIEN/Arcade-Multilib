@@ -11,6 +11,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <unordered_map>
+#include <map>
 #include <functional>
 #include <string>
 #include <iostream>
@@ -36,6 +37,7 @@ public:
 //	bool loop(void (*func)(void)) override;
 	std::pair<int, int> getpos(std::string name) override;
 	std::pair<int, int> getdim(std::string name) override;
+	IGraphic::TYPE getType(std::string name);
 	bool setpos(std::pair<int, int> pos, std::string name) override;
 	bool setdim(std::pair<int, int> dim, std::string name) override;
 	bool isKeyPressed(std::string key) override;
@@ -75,14 +77,14 @@ private:
 	std::unordered_map<std::string, std::string> _mapTex;
 	std::unordered_map<std::string, int> _mapType;
 	// pour displayObj
-	std::unordered_map<std::string, IShape *> _mapDownCast;
+	std::map<std::string, IShape *> _mapDownCast;
 	std::unordered_map<int, argsArea> _pointerFunc;
 	// pour displayObj
 	// std::unordered_map<int, std::function<void (std::string)> > _downCast;
 // pour le type: sprite le framework doit savoir que ca correspond a -1
 };
 
-// extern "C" void libsf()
+// extern "C" IGraphic *create()
 // {
 // 	return (new sfmlFramework());
 // }

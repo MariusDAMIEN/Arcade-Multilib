@@ -13,6 +13,7 @@ SfmlCircle::SfmlCircle(std::pair<int, int> dim, std::pair<int, int> pos, sf::Col
 	_circle.setOutlineColor(color);
 	_circle.setOutlineThickness(5);
 	_circle.setPosition(pos.first, pos.second);
+	_circle.setFillColor(sf::Color::Transparent);
 }
 
 SfmlCircle::~SfmlCircle()

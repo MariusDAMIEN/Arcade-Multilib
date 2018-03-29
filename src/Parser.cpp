@@ -25,12 +25,26 @@ bool Parser::open()
 	
 }
 
+bool Parser::fill_area()
+{
+	std::string line;
+	int	i = 0;
+	int	j = 0;
+
+	while (_file.eof() && getline(_file, line)) {
+		i = 0;
+		for (char c : line) {
+			if (c == 'x')
+				create_area(i, j, )
+		}
+	}
+}
+
 bool Parser::start_parse()
 {
 	std::string line;
 	std::pair<int , int> pos(1, 2);
 	int	i = 0;
-	int	j = 0;
 
 	if (getline(_file, line)) {
 		if (line.empty())
@@ -38,30 +52,24 @@ bool Parser::start_parse()
 					     + std::string("_file"));
 		for (char c : line) {
  			i++;
-			if (isdigit(c)) {
+			if (isdigit(c))
 				continue;
-			}
-			else {
-				if (c != 'x') {
-					throw errHand::Error(std::string("Parse ERROR: size must be separated by an 'x'")
-							     + std::string("_file"));
-					j = 1;
-				}
-				
-				else {
-					pos.first = atoi(line.c_str());
-					line = line.substr(i + 1);
-					continue;
-					std::cout << pos.first << std::endl;
-					std::cout << pos.second << std::endl;
-				}
-				
-			}
+			if (c != 'x')
+				throw errHand::Error(std::string("Parse ERROR: size must be separated by an 'x'")
+						     + std::string("_file"));
+			pos.first = atoi(line.c_str());
+			line = line.substr(i);
+			break;
 		}
+		for (char c : line) {
+			if (isdigit(c))
+				continue;
+			else
+				throw errHand::Error(std::string("Parse ERROR: size must be digit"));
+		}
+		pos.second = atoi(line.c_str());
+		pos = _size;
 	}
-/*	while (!_file.eof() && getline(_file, line)) {
-		;
-		}*/
 }
 
 int main()
