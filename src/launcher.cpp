@@ -42,11 +42,17 @@ bool launcher::loop()
 	char marius[11] = "trop fort\n";
 
 	_igraph->createArea(std::make_pair(200, 200), std::make_pair(10, 10)
-			    , std::make_pair(marius, "blue"), IGraphic::TYPE::CHARAC);
-	_igraph->createArea(std::make_pair(50, 200), std::make_pair(300, 10)
+			    , std::make_pair(marius, "blue"), IGraphic::TYPE::RECT);
+	_igraph->createArea(std::make_pair(50, 200), std::make_pair(17, 10)
 			    , std::make_pair("Name", "trop fort chieffff marius"), IGraphic::TYPE::TEXT);
 	while (1) {
 		if (_igraph->isKeyPressed("a") == true)
+			exit(6);
+		if (_igraph->isKeyPressed("a") == true)
+			exit(6);
+		if (_igraph->isKeyPressed("b") == true)
+			exit(6);
+		if (_igraph->isKeyPressed("c") == true)
 			exit(6);
 		_igraph->clearWindow();
 		_igraph->displayObj();

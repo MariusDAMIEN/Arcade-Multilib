@@ -106,7 +106,8 @@ void sfmlFramework::_rectangle(std::pair<int, int> dim, std::pair<int, int> pos,
 	_mapTex[nameTex.first] = nameTex.second;
 	_mapType[nameTex.first] = type;
 	tmp->setPos(pos.first, pos.second);
-	_mapDownCast[nameTex.first] = tmp;
+	// _mapDownCast[nameTex.first] = tmp;
+	_mapDownCast.insert(std::make_pair(nameTex.first, tmp));
 }
 
 void sfmlFramework::_text(std::pair<int, int> dim, std::pair<int, int> pos,
@@ -118,7 +119,8 @@ void sfmlFramework::_text(std::pair<int, int> dim, std::pair<int, int> pos,
 	_mapPos[nameTex.first] = pos;
 	_mapTex[nameTex.first] = nameTex.second;
 	_mapType[nameTex.first] = type;
-	_mapDownCast[nameTex.first] = tmp;
+	// _mapDownCast[nameTex.first] = tmp;
+	_mapDownCast.insert(std::make_pair(nameTex.first, tmp));
 }
 
 void sfmlFramework::_circle(std::pair<int, int> dim, std::pair<int, int> pos,
@@ -222,6 +224,13 @@ std::pair<int, int> sfmlFramework::getdim(std::string name)
 	return std::make_pair(0, 0);
 }
 
+IGraphic::TYPE sfmlFramework::getType(std::string name)
+{
+	if (_mapType.find(name) != _mapType.end())
+		return (IGraphic::TYPE)_mapType[name];
+	throw errHand::Error("getType: this area doesn't exist");
+}
+
 template<class T>
 bool sfmlFramework::_setPosT(std::pair<int, int> pos, std::string name)
 {
@@ -282,6 +291,7 @@ bool sfmlFramework::isKeyPressed(std::string key)
 {
 	_strLower(key);
 	if (_keys.find(key) != _keys.end() || _keys2.find(key) != _keys2.end()) {
+		usleep(200);
 		if (_window->pollEvent(_event) && (sf::Keyboard::isKeyPressed(_keys[key]) ||
 			_event.type == _keys2[key])) {
 			return true;
