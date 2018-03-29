@@ -124,7 +124,6 @@ bool launcher::loop()
 				    , IGraphic::TYPE::TEXT);
 		j += 50;
 	}
-
 	_igraph->createArea(std::make_pair(1200, 1200), std::make_pair(0, 0)
 			    , std::make_pair("bg_menu", "bg_menu.png"), IGraphic::TYPE::RECT);
 	_igraph->createArea(std::make_pair(160, 40), _select

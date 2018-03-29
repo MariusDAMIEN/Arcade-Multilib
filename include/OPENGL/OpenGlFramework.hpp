@@ -8,7 +8,7 @@
 #ifndef _OPENGLFRAMEWORK_HPP_
 # define _OPENGLFRAMEWORK_HPP_
 
-#include <GLFW/glfw3.h>
+// #include <GLFW/glfw3.h>
 
 class OpenGlFramework
 {

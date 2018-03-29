@@ -11,9 +11,11 @@ SFML	= lib_arcade_sfml.so
 
 NCURSE	= lib_arcade_ncurse.so
 
-SOLARFOX = lib_arcade_solarfox.so
+OPENGL 	= lib_arcade_openGl.so
 
-LDFLAGS	=	-l_arcade_sfml -l_arcade_ncurse
+SOLARFOX	= lib_arcade_solarfox.so
+
+LDFLAGS	=	-l_arcade_sfml -l_arcade_ncurse -l_arcade_openGl
 
 LDFLAGSGAME	=	-l_arcade_solarfox
 
@@ -43,7 +45,9 @@ SRCSSFML	=	$(DIRLIB)SFML/sfmlFramework.cpp	\
 SRCSNCURSE	=	$(DIRLIB)NCURSE/ncurseFramework.cpp	\
 			$(DIR)errorHandling.cpp	\
 
-SRCSSOLAR	=	games/solarFox/solarFox.cpp
+SRCSOPENGL	=	$(DIRLIB)OPENGL/OpenGLFramework.cpp
+
+SRCSSOLAR	=	$(DIRGAME)/solarFox/solarFox.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 
@@ -51,15 +55,17 @@ OBJSSFML	= $(SRCSSFML:.cpp=.o)
 
 OBJSNCURSE	= $(SRCSNCURSE:.cpp=.o)
 
+OBJSOPENGL	= $(SRCSOPENGL:.cpp=.o)
+
 OBJSSOLAR	= $(SRCSSOLAR:.cpp=.o)
 
 CXXFLAGS = -I./include
 
-CXXFLAGS += -Wall -Wextra -lsfml-graphics -lsfml-window -lsfml-system -fPIC -std=c++14 -g3 -lncurses -Wfatal-errors
+CXXFLAGS += -Wall -Wextra -fPIC -std=c++14 -g3 -ldl
 
 all: graphicals games core
 
-graphicals: $(SFML) $(NCURSE)
+graphicals: $(SFML) $(OPENGL) $(NCURSE)
 
 games: $(SOLARFOX)
 
@@ -74,6 +80,9 @@ $(SFML): $(OBJSSFML)
 $(NCURSE): $(OBJSNCURSE)
 	$(CC) $(OBJSNCURSE) -shared -o $(DIRLIB)$(NCURSE) -lncurses
 
+$(OPENGL): $(OBJSOPENGL)
+	$(CC) $(OBJSOPENGL) -shared -o $(DIRLIB)$(OPENGL) -lGL -lGLU -lglut -lglfw -lGL -lm -lXrandr -lXi -lX11 -lXxf86vm -lpthread -ldl -lXinerama -lXcursor
+
 $(NAME): $(OBJS)
 	 $(CC) $(OBJS) -o $(NAME) -ldl -L./lib/ $(LDFLAGS)  -L./games/ $(LDFLAGSGAME)
 
@@ -81,12 +90,14 @@ clean:
 	$(RM) $(OBJS)
 	$(RM) $(OBJSSFML)
 	$(RM) $(OBJSNCURSE)
+	$(RM) $(OBJSOPENGL)
 	$(RM) $(OBJSSOLAR)
 
 fclean: clean
 	$(RM) $(NAME)
 	$(RM) $(DIRLIB)$(SFML)
 	$(RM) $(DIRLIB)$(NCURSE)
+	$(RM) $(DIRLIB)$(OPENGL)
 	$(RM) $(DIRGAME)$(SOLARFOX)
 
 re: fclean all
