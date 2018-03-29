@@ -40,7 +40,7 @@ class IGraphic
 //	virtual	bool loop(void (*func)(void)) = 0;
 	virtual	std::pair<int, int> getpos(std::string name) = 0;
 	virtual	std::pair<int, int> getdim(std::string name) = 0;
-	virtual IGraphic::TYPE getType(std::string name);
+	virtual IGraphic::TYPE getType(std::string name) = 0;
 	virtual	bool setpos(std::pair<int, int> pos, std::string name) = 0;
 	virtual	bool setdim(std::pair<int, int> dim, std::string name) = 0;
 	virtual	bool isKeyPressed(std::string key) = 0;

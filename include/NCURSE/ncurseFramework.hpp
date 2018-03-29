@@ -46,6 +46,7 @@ public:
 	std::pair<int, int> getdim(std::string) override;
 	bool setpos(std::pair<int, int>, std::string) override;
 	bool setdim(std::pair<int, int>, std::string) override;
+	IGraphic::TYPE getType(std::string name);
 	bool isKeyPressed(std::string) override;
 	bool displayObj() override;
 	bool deleteArea(std::string) override;

@@ -53,6 +53,9 @@ ncurseFramework::ncurseFramework()
 ncurseFramework::~ncurseFramework()
 {}
 
+IGraphic::TYPE ncurseFramework::getType(std::string name)
+{}
+
 void ncurseFramework::init() const
 {
 	initscr();
