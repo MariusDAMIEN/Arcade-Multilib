@@ -5,6 +5,7 @@
 // 
 //
 
+#include "NCURSE/ncurseFramework.hpp"
 #include "launcher.hpp"
 
 launcher::launcher(const char *lib)

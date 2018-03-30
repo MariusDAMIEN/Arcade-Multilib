@@ -21,6 +21,9 @@
 #include "ERROR/ErrorHandling.hpp"
 #include "IGraphic.hpp"
 
+// typedef std::function<void (std::pair<int, int>, std::pair<int, int>,
+// std::pair<std::string, std::string>, IGraphic::TYPE)> argsArea;
+
 typedef struct s_area {
 	IGraphic::TYPE _type;
 	std::pair<int, int>_dim;
@@ -51,14 +54,17 @@ public:
 	bool destroyWindow() override;
 private:
 	void modifWin();
+	void init_keys();
+	void init_colors();
 	void printWin();
 	void crWin(std::pair<int, int>);
 	void _strLower(std::string &str);
 	std::unordered_map<std::string, char> _keys;
-	void init() const;
+	void init();
 	int _ch;
 	std::vector<t_area *> _areasVec;
-	char** _mainWin;
+	char **_mainWin;
+	std::string  _nameWin;
 };
 
 #endif /* !_NCURSEFRAMEWORK_HPP_ */

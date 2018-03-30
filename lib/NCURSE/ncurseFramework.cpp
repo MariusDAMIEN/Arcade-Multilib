@@ -5,6 +5,8 @@
 //
 //
 
+
+
 #include <cstdlib>
 #include <cstring>
 //#include <iostream>
@@ -13,8 +15,7 @@
 #include <cstddef>
 #include "NCURSE/ncurseFramework.hpp"
 
-ncurseFramework::ncurseFramework()
-	: _ch(0), _mainWin(NULL)
+void ncurseFramework::init_keys()
 {
 	_keys = {
 		{"a", 'a'},
@@ -49,6 +50,26 @@ ncurseFramework::ncurseFramework()
 		{"escape", 27}
 	};
 }
+void ncurseFramework::init_colors()
+{
+	init_pair(1, COLOR_BLACK, COLOR_WHITE);
+	init_pair(2, COLOR_GREEN, COLOR_BLACK);
+	init_pair(3, COLOR_BLUE, COLOR_BLACK);
+	init_pair(4, COLOR_MAGENTA, COLOR_BLACK);
+	init_pair(5, COLOR_CYAN, COLOR_BLACK);
+	init_pair(6, COLOR_WHITE, COLOR_BLACK);
+	init_pair(7, COLOR_MAGENTA, COLOR_BLACK);
+	init_pair(8, COLOR_RED, COLOR_BLACK);
+	init_pair(9, COLOR_RED, COLOR_BLUE);
+}
+
+ncurseFramework::ncurseFramework()
+	: _ch(0), _mainWin(NULL)
+{
+	init_keys();
+	//attron(COLOR_PAIR(3));
+	mvprintw(1, 1, "wsh magl bien??");
+}
 
 ncurseFramework::~ncurseFramework()
 {}
@@ -62,12 +83,17 @@ IGraphic::TYPE ncurseFramework::getType(std::string name)
 	return TYPE::CHARAC;
 }
 
-void ncurseFramework::init() const
+void ncurseFramework::init()
 {
+//	int x,y = 0;
+	// printf("%d  %d\n");
+	// getmaxyx(stdscr, x ,y);
 	initscr();
 	noecho();
 	keypad(stdscr, TRUE);
 	curs_set(FALSE);
+	start_color();
+	init_colors();
 	box(stdscr, ACS_VLINE, ACS_HLINE);
 }
 
@@ -75,17 +101,24 @@ void ncurseFramework::crWin(std::pair<int, int> dim)
 {
 	int y = 0;
 	int x;
+	std::string str = "";
 	_mainWin = (char **)malloc(sizeof(char *) * (dim.second + 1));
 
 	if (_mainWin == NULL)
 		throw errHand::Error("Err maloc.");
+	
 	for (; y < (dim.second / 10); ++y) {
 		_mainWin[y] = (char *)malloc(sizeof(char) * dim.first);
 		if (_mainWin[y] == NULL)
 			throw errHand::Error("Err maloc.");
 		x = 0;
-		for (; x < (dim.first / 10); ++x)
-			_mainWin[y][x] = '#';
+		for (; x < (dim.first / 10); ++x) {
+			_mainWin[y][x] = ' ';
+			if (y == 0 || y == dim.second / 10 - 1)
+				_mainWin[y][x] = '#';
+			if (x == 0 || x == dim.first / 10 - 1)
+				_mainWin[y][x] = '#';
+		}
 		_mainWin[y][x] = '\0';
 	}
 	_mainWin[y] = NULL;
@@ -93,19 +126,21 @@ void ncurseFramework::crWin(std::pair<int, int> dim)
 
 void ncurseFramework::printWin()
 {
-	int i = 0;
+	unsigned int i = 0;
 
+	attron(COLOR_PAIR(4));
 	do {
-		mvprintw(LINES / 2 - 25 + i, COLS / 2 - 25, "%s\n", _mainWin[i]);
+		mvprintw(2 + i, 3, "%s\n", _mainWin[i]);
 		++i;
 	} while (_mainWin[i]);
+	attroff(COLOR_PAIR(4));
 }
 
 bool ncurseFramework::createWindow(std::pair<int, int> dim, std::string name)
 {
 	init();
 	crWin(dim);
-	mvprintw(3, LINES / 2, name.c_str());
+	_nameWin = name;
 	return true;
 }
 
@@ -131,6 +166,7 @@ bool ncurseFramework::createArea(std::pair<int, int> dim, std::pair<int, int> po
 bool ncurseFramework::clearWindow()
 {
 	timeout(1);
+	mvprintw(1, COLS / 2, _nameWin.c_str());
 	printWin();
 	_ch = getch();
 	refresh();
@@ -139,10 +175,9 @@ bool ncurseFramework::clearWindow()
 
 bool ncurseFramework::isKeyPressed(std::string key)
 {
-	//_strLower(key);
+	_strLower(key);
 	if (_keys[key] == _ch)
 		return true;
-	//throw errHand::Error("ERROR: The key pressed doesn't exist!");
 	return false;
 }
 
@@ -215,20 +250,40 @@ bool ncurseFramework::destroyWindow()
 	return true;
 }
 
+int maplen(char **map) {
+	int i = 0;
+
+	for (; map[i]; ++i);
+	return i;
+}
+
 void ncurseFramework::modifWin()
 {
 	int x_tx,y_tx = 0;
 
 	for (unsigned int i = 0; i < _areasVec.size(); ++i) {
-		if (_areasVec[i]->_type == IGraphic::TYPE::TEXT) {
-			x_tx = _areasVec[i]->_pos.first / 10;
-			y_tx = _areasVec[i]->_pos.second / 10;
+		if (((_areasVec[i]->_dim.second + _areasVec[i]->_pos.second) / 10) > maplen(_mainWin)) {
+			printf(">>>>>>>>>\n");
+			//exit(84);
+			throw errHand::Error("ERROR: Window overflow");
+			printf(">>>>>>>>>\n");
+			
+		} else if (_areasVec[i]->_type == IGraphic::TYPE::TEXT) {
+			y_tx = _areasVec[i]->_pos.first / 10;
+			x_tx = _areasVec[i]->_pos.second / 10;
 			for (unsigned int inc = 0; inc < strlen(_areasVec[i]->_nameTex.second.c_str()); ++inc)
 				_mainWin[x_tx][y_tx++] = _areasVec[i]->_nameTex.second.c_str()[inc];
 		} else {
-			for (int y = 0; y < (_areasVec[i]->_dim.second / 10); ++y) {
-				for (int x = 0; x < (_areasVec[i]->_dim.first / 10); ++x)
-					_mainWin[y][x] = '|';
+			for (int y = _areasVec[i]->_pos.second / 10; y < ((_areasVec[i]->_dim.second + _areasVec[i]->_pos.second) / 10); ++y) {
+				for (int x = _areasVec[i]->_pos.first / 10; x < ((_areasVec[i]->_dim.first + _areasVec[i]->_pos.first) / 10); ++x)
+				{
+					_mainWin[y][x] = ' ';
+					if (y == _areasVec[i]->_pos.second / 10 || y == ((_areasVec[i]->_dim.second + _areasVec[i]->_pos.second) / 10) - 1)
+						_mainWin[y][x] = '#';
+					if (x == _areasVec[i]->_pos.first / 10 || x == ((_areasVec[i]->_dim.first + _areasVec[i]->_pos.first) / 10) - 1)
+						_mainWin[y][x] = '#';
+					
+				}
 			}
 		}
 	}
