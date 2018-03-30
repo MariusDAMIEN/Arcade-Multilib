@@ -2,12 +2,13 @@
 // EPITECH PROJECT, 2018
 // 
 // File description:
-// 
+//
 //
 
 #include <iostream>
 #include "arcade.hpp"
 #include "ERROR/ErrorHandling.hpp"
+#include "Parser.hpp"
 
 int launch(char *lib);
 
@@ -21,6 +22,7 @@ int main(int ac, char **av)
 	// }
 	try {
           launch(av[1]);
+		//
 	} catch (const std::exception &err) {
 		std::cerr << err.what() << std::endl;
 		return errHand::ERR;

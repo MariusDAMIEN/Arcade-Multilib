@@ -33,6 +33,7 @@ SRCS	=	$(DIR)main.cpp	\
 		$(DIR)launcher.cpp	\
 		$(DIR)SmartPointer/SmartPointer.cpp	\
 		$(DIR)errorHandling.cpp	\
+		$(DIR)Parser.cpp						\
 
 
 SRCSSFML	=	$(DIRLIB)SFML/sfmlFramework.cpp	\
