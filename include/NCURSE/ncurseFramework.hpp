@@ -21,9 +21,6 @@
 #include "ERROR/ErrorHandling.hpp"
 #include "IGraphic.hpp"
 
-// typedef std::function<void (std::pair<int, int>, std::pair<int, int>,
-// std::pair<std::string, std::string>, IGraphic::TYPE)> argsArea;
-
 typedef struct s_area {
 	IGraphic::TYPE _type;
 	std::pair<int, int>_dim;
