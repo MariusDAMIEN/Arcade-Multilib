@@ -292,9 +292,9 @@ bool sfmlFramework::isKeyPressed(std::string key)
 {
 	_strLower(key);
 	if (_keys.find(key) != _keys.end() || _keys2.find(key) != _keys2.end()) {
-		usleep(200);
-		if (_window->pollEvent(_event) && (sf::Keyboard::isKeyPressed(_keys[key]) ||
-			_event.type == _keys2[key])) {
+		usleep(2000);
+		if (sf::Keyboard::isKeyPressed(_keys[key])) {
+			usleep(97000);
 			return true;
 		}
 	} else

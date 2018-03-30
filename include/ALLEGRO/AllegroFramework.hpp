@@ -12,6 +12,7 @@
 #include <iostream>
 #include <vector>
 #include <unordered_map>
+#include <map>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_native_dialog.h>
 #include <allegro5/allegro_font.h>
@@ -65,7 +66,7 @@ private:
 
 	std::unordered_map<std::string, std::pair<int, int>> _mapDim;
 	std::unordered_map<std::string, std::pair<int, int>> _mapPos;
-	std::unordered_map<std::string, std::string> _mapTex;
+	std::map<std::string, std::string> _mapTex;
 	std::unordered_map<std::string, int> _mapType;
 	std::unordered_map<std::string, ALLEGRO_FONT *> _mapFont;
 	std::unordered_map<std::string, ALLEGRO_BITMAP *> _mapSprite;

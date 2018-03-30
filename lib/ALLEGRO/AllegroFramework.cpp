@@ -109,7 +109,8 @@ void AllegroFramework::_makeArea(std::pair<int, int> dim, std::pair<int, int> po
 	_mapDim[nameTex.first] = dim;
 	_mapPos[nameTex.first] = pos;
 	_mapTex[nameTex.first] = nameTex.second;
-	_mapType[nameTex.first] = type;		
+	// _mapType[nameTex.first] = type;
+	_mapType.insert(std::make_pair(nameTex.first, type));
 }
 
 void AllegroFramework::_makeText(std::pair<int, int> dim, std::pair<int, int> pos,
@@ -118,7 +119,8 @@ void AllegroFramework::_makeText(std::pair<int, int> dim, std::pair<int, int> po
 	_mapDim[nameTex.first] = dim;
 	_mapPos[nameTex.first] = pos;
 	_mapTex[nameTex.first] = nameTex.second;
-	_mapType[nameTex.first] = type;
+	// _mapType[nameTex.first] = type;
+	_mapType.insert(std::make_pair(nameTex.first, type));
 	_mapFont[nameTex.first] = al_load_font("fonts/arcade.ttf", dim.first, 0);
 }
 
@@ -130,7 +132,8 @@ bool AllegroFramework::_makeSpriteTex(std::pair<int, int> dim, std::pair<int, in
 	_mapDim[nameTex.first] = dim;
 	_mapPos[nameTex.first] = pos;
 	_mapTex[nameTex.first] = nameTex.second;
-	_mapType[nameTex.first] = -1;
+	// _mapType[nameTex.first] = -1;
+	_mapType.insert(std::make_pair(nameTex.first, -1));
 	if (!(_mapSprite[nameTex.first] = al_load_bitmap(nameTex.second.c_str())))
 		return false;
 	return true;
