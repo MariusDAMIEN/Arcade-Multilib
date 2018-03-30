@@ -54,20 +54,23 @@ public:
 	bool destroyWindow() override;
 private:
 	void modifWin();
+	void init_keys();
+	void init_colors();
 	void printWin();
 	void crWin(std::pair<int, int>);
 	void _strLower(std::string &str);
 	std::unordered_map<std::string, char> _keys;
-	void init() const;
+	void init();
 	int _ch;
 	std::vector<t_area *> _areasVec;
-	char** _mainWin;
+	char **_mainWin;
+	std::string  _nameWin;
 };
 
-extern "C" IGraphic *create()
-{
- return (new ncurseFramework());
-}
+// extern "C" IGraphic *create()
+// {
+// 	return (new ncurseFramework());
+// }
 
 
 #endif /* !_NCURSEFRAMEWORK_HPP_ */

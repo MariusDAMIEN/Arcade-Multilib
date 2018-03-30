@@ -18,18 +18,18 @@
 
 typedef IGraphic* create_t();
 
-class launcher {
-public:
-	launcher(const char *lib);
-	~launcher();
-	int load_first_lib();
-	void windowcreation();
-	bool loop();
+// class launcher {
+// public:
+// 	launcher(const char *lib);
+// 	~launcher();
+// 	int load_first_lib();
+// 	void windowcreation();
+// 	bool loop();
 
-private:
-	std::string _lib;
-        void const * _handle;
-	IGraphic *_igraph;
-};
+// private:
+// 	std::string _lib;
+//         void const * _handle;
+// 	IGraphic *_igraph;
+// };
 
 #endif /* !_LAUNCHER_HPP_ */
