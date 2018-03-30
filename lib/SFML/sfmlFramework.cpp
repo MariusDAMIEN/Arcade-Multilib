@@ -28,6 +28,7 @@ sfmlFramework::sfmlFramework()
 		{"h", sf::Keyboard::H},
 		{"i", sf::Keyboard::I},
 		{"j", sf::Keyboard::J},
+		{"k", sf::Keyboard::K},
 		{"m", sf::Keyboard::M},
 		{"n", sf::Keyboard::N},
 		{"o", sf::Keyboard::O},
@@ -375,7 +376,8 @@ bool sfmlFramework::destroyWindow()
 	return true;
 }
 
-extern "C" IGraphic* create() {
+extern "C" IGraphic *create()
+{
 	return new sfmlFramework();
 }
 

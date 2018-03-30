@@ -84,10 +84,4 @@ private:
 // pour le type: sprite le framework doit savoir que ca correspond a -1
 };
 
-// extern "C" IGraphic *create()
-// {
-// 	return (new sfmlFramework());
-// }
-
-
 #endif /* !_SFMLFRAMEWORK_HPP_ */

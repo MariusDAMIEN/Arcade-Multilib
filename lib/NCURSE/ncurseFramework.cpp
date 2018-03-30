@@ -294,3 +294,8 @@ bool ncurseFramework::displayObj()
 	modifWin();
 	return true;
 }
+
+extern "C" IGraphic *create()
+{
+	return (new ncurseFramework());
+}

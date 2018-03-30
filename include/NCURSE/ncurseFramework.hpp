@@ -67,10 +67,4 @@ private:
 	std::string  _nameWin;
 };
 
-// extern "C" IGraphic *create()
-// {
-// 	return (new ncurseFramework());
-// }
-
-
 #endif /* !_NCURSEFRAMEWORK_HPP_ */
