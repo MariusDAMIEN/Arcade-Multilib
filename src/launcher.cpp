@@ -1,12 +1,14 @@
 //
 // EPITECH PROJECT, 2018
-// 
+//
 // File description:
-// 
+//
 //
 
+#include <unistd.h>
 #include "NCURSE/ncurseFramework.hpp"
 #include "launcher.hpp"
+#include <iostream>
 
 launcher::launcher(const char *lib)
 {
@@ -47,7 +49,7 @@ void launcher::next_lib()
 {
 	_igraph->destroyWindow();
 	dlclose((void *)_handle);
-	_libIt++;		
+	_libIt++;
 	if (_libIt == _vectLib.end())
 		_libIt = _vectLib.begin();
 	_lib = *_libIt;
@@ -97,8 +99,12 @@ void launcher::change_lib(const char *dir_name)
 	closedir(dir);
 }
 
-bool launcher::loop()
+bool  launcher::loop()
 {
+	_igraph->createWindow(std::make_pair(1200, 1200), "oklm");
+
+	_igraph->createArea(std::make_pair(1200, 1200), std::make_pair(0, 0)
+			    , std::make_pair("bg_menu", "bg_menu.png"), IGraphic::TYPE::RECT);
 	int i = 550;
 	for ( auto it : _vectLib ) {
 		std::string name("name");
@@ -125,8 +131,6 @@ bool launcher::loop()
 				    , IGraphic::TYPE::TEXT);
 		j += 50;
 	}
-	_igraph->createArea(std::make_pair(1200, 1200), std::make_pair(0, 0)
-			    , std::make_pair("bg_menu", "bg_menu.png"), IGraphic::TYPE::RECT);
 	_igraph->createArea(std::make_pair(160, 40), _select
 			    , std::make_pair("select", "red"), IGraphic::TYPE::RECT);
 	_igraph->createArea(std::make_pair(200, 200), std::make_pair(250, 0)
@@ -159,7 +163,7 @@ bool launcher::loop()
 
 void launcher::windowcreation()
 {
-	_igraph->createWindow(std::make_pair(800, 200), "oklm");
+	_igraph->createWindow(std::make_pair(1200, 1200), "oklm");
 }
 
 
@@ -168,7 +172,7 @@ int launch(char *lib)
 	launcher go(lib);
 
 	go.load_first_lib();
-	go.windowcreation();
+	//go.windowcreation();
 	go.loop();
 	return (0);
 }
