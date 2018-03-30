@@ -54,7 +54,13 @@ ncurseFramework::~ncurseFramework()
 {}
 
 IGraphic::TYPE ncurseFramework::getType(std::string name)
-{}
+{
+	for (unsigned int i = 0; i < _areasVec.size(); ++i) {
+		if (name == _areasVec[i]->_nameTex.first)
+			return (_areasVec[i]-> _type);
+	}
+	return TYPE::CHARAC;
+}
 
 void ncurseFramework::init() const
 {
