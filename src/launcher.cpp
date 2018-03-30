@@ -102,7 +102,6 @@ void launcher::change_lib(const char *dir_name)
 bool  launcher::loop()
 {
 	_igraph->createWindow(std::make_pair(1200, 1200), "oklm");
-
 	_igraph->createArea(std::make_pair(1200, 1200), std::make_pair(0, 0)
 			    , std::make_pair("bg_menu", "bg_menu.png"), IGraphic::TYPE::RECT);
 	int i = 550;

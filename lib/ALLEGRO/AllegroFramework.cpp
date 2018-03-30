@@ -15,6 +15,7 @@ AllegroFramework::AllegroFramework()
 	al_init_ttf_addon();
 	al_init_primitives_addon();
 	al_install_keyboard();
+	al_init_image_addon();
 	_event_queue = al_create_event_queue();
 	al_register_event_source(_event_queue, al_get_keyboard_event_source());
 	_keys = {
@@ -121,6 +122,20 @@ void AllegroFramework::_makeText(std::pair<int, int> dim, std::pair<int, int> po
 	_mapFont[nameTex.first] = al_load_font("fonts/arcade.ttf", dim.first, 0);
 }
 
+bool AllegroFramework::_makeSpriteTex(std::pair<int, int> dim, std::pair<int, int> pos,
+	std::pair<std::string, std::string> nameTex, IGraphic::TYPE type)
+{
+	(void)type;
+	nameTex.second = std::string("assets/") + nameTex.second;
+	_mapDim[nameTex.first] = dim;
+	_mapPos[nameTex.first] = pos;
+	_mapTex[nameTex.first] = nameTex.second;
+	_mapType[nameTex.first] = -1;
+	if (!(_mapSprite[nameTex.first] = al_load_bitmap(nameTex.second.c_str())))
+		return false;
+	return true;
+}
+
 bool AllegroFramework::createArea(std::pair<int, int> dim, std::pair<int, int> pos,
 	std::pair<std::string, std::string> nameTex, IGraphic::TYPE type)
 {
@@ -128,8 +143,9 @@ bool AllegroFramework::createArea(std::pair<int, int> dim, std::pair<int, int> p
 		(_colors.find(nameTex.second) != _colors.end() ||
 		type == IGraphic::TYPE::TEXT)) {
 		_pointerFunc[type](dim, pos, nameTex, type);
-	} else {
-	printf("lol\n");
+	} else if (_mapType.find(nameTex.first) == _mapType.end())
+		return _makeSpriteTex(dim, pos, nameTex, type);
+	else {
 		throw errHand::Error("createArea: doesn't work");
 	}
 	return true;
@@ -206,10 +222,20 @@ void AllegroFramework::_dispText(std::string name)
 		_mapPos[name].second, 0, _mapTex[name].c_str());
 }
 
+void AllegroFramework::_dispSprite(std::string name)
+{
+	al_draw_bitmap_region(_mapSprite[name], 0, 0,
+		_mapDim[name].first, _mapDim[name].second,
+		_mapPos[name].first, _mapPos[name].second, 0);
+}
+
 bool AllegroFramework::displayObj()
 {
 	for (auto it : _mapType) {
 		switch (it.second) {
+			case -1:
+				_dispSprite(it.first);
+				break ;
 			case IGraphic::TYPE::RECT:
 				_dispRect(it.first);
 				break ;
@@ -246,6 +272,9 @@ bool AllegroFramework::changeTexture(std::string name, std::string path)
 bool AllegroFramework::destroyWindow()
 {
 	al_destroy_display(_window);
+	// al_destroy_font(font);
+	// al_destroy_event_queue(event_queue);
+	// al_destroy_bitmap(character);
 	return true;
 }
 

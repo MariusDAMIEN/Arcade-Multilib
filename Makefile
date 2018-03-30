@@ -82,7 +82,7 @@ $(NCURSE): $(OBJSNCURSE)
 	$(CC) $(OBJSNCURSE) -shared -o $(DIRLIB)$(NCURSE) -lncurses
 
 $(ALLEGRO): $(OBJSALLEGRO)
-	$(CC) $(OBJSALLEGRO) -shared -o $(DIRLIB)$(ALLEGRO) -lallegro -lallegro_dialog -lallegro_font -lallegro_ttf -lallegro_primitives
+	$(CC) $(OBJSALLEGRO) -shared -o $(DIRLIB)$(ALLEGRO) -lallegro -lallegro_dialog -lallegro_font -lallegro_ttf -lallegro_primitives -lallegro_image
 
 $(NAME): $(OBJS)
 	 $(CC) $(OBJS) -o $(NAME) -ldl  -L./games/ $(LDFLAGSGAME)

@@ -17,6 +17,7 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_image.h>
 #include <string.h>
 #include <stdlib.h>
 #include "IGraphic.hpp"
@@ -44,6 +45,9 @@ public:
 	bool changeTexture(std::string name, std::string path);
 	bool destroyWindow();
 private:
+	void _dispSprite(std::string name);
+	bool _makeSpriteTex(std::pair<int, int> dim, std::pair<int, int> pos,
+		std::pair<std::string, std::string> nameTex, IGraphic::TYPE type);
 	void _makeText(std::pair<int, int> dim, std::pair<int, int> pos,
 		std::pair<std::string, std::string> nameTex, IGraphic::TYPE type);
 	void _dispText(std::string name);
@@ -64,6 +68,7 @@ private:
 	std::unordered_map<std::string, std::string> _mapTex;
 	std::unordered_map<std::string, int> _mapType;
 	std::unordered_map<std::string, ALLEGRO_FONT *> _mapFont;
+	std::unordered_map<std::string, ALLEGRO_BITMAP *> _mapSprite;
 
 	std::unordered_map<int, argsArea> _pointerFunc;
 };
