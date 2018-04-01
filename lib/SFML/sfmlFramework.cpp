@@ -73,7 +73,19 @@ sfmlFramework::sfmlFramework()
 		this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
 		std::placeholders::_4)));
 	// circle
-	_pointerFunc.insert(std::make_pair(1, std::bind(&sfmlFramework::_text,
+	_pointerFunc.insert(std::make_pair(1, std::bind(&sfmlFramework::_circle,
+		this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
+		std::placeholders::_4)));
+	_pointerFunc.insert(std::make_pair(2, std::bind(&sfmlFramework::_rectangle,
+		this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
+		std::placeholders::_4)));
+	_pointerFunc.insert(std::make_pair(3, std::bind(&sfmlFramework::_rectangle,
+		this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
+		std::placeholders::_4)));
+	_pointerFunc.insert(std::make_pair(5, std::bind(&sfmlFramework::_rectangle,
+		this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
+		std::placeholders::_4)));
+	_pointerFunc.insert(std::make_pair(6, std::bind(&sfmlFramework::_rectangle,
 		this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
 		std::placeholders::_4)));
 }
@@ -108,7 +120,7 @@ void sfmlFramework::_rectangle(std::pair<int, int> dim, std::pair<int, int> pos,
 	_mapType[nameTex.first] = type;
 	tmp->setPos(pos.first, pos.second);
 	// _mapDownCast[nameTex.first] = tmp;
-	_mapDownCast.insert(std::make_pair(nameTex.first, tmp));
+	_mapDownCast.push_back(std::make_pair(nameTex.first, tmp));
 }
 
 void sfmlFramework::_text(std::pair<int, int> dim, std::pair<int, int> pos,
@@ -121,7 +133,7 @@ void sfmlFramework::_text(std::pair<int, int> dim, std::pair<int, int> pos,
 	_mapTex[nameTex.first] = nameTex.second;
 	_mapType[nameTex.first] = type;
 	// _mapDownCast[nameTex.first] = tmp;
-	_mapDownCast.insert(std::make_pair(nameTex.first, tmp));
+	_mapDownCast.push_back(std::make_pair(nameTex.first, tmp));
 }
 
 void sfmlFramework::_circle(std::pair<int, int> dim, std::pair<int, int> pos,
@@ -133,7 +145,8 @@ void sfmlFramework::_circle(std::pair<int, int> dim, std::pair<int, int> pos,
 	_mapPos[nameTex.first] = pos;
 	_mapTex[nameTex.first] = nameTex.second;
 	_mapType[nameTex.first] = type;
-	_mapDownCast[nameTex.first] = tmp;
+	// _mapDownCast[nameTex.first] = tmp;
+	_mapDownCast.push_back(std::make_pair(nameTex.first, tmp));
 }
 
 void sfmlFramework::_makeSpriteTex(std::pair<int, int> dim, std::pair<int, int> pos,
@@ -147,7 +160,8 @@ void sfmlFramework::_makeSpriteTex(std::pair<int, int> dim, std::pair<int, int> 
 	_mapTex[nameTex.first] = nameTex.second;
 	_mapType[nameTex.first] = -1;
 	tmp->setPos(pos.first, pos.second);
-	_mapDownCast[nameTex.first] = tmp;
+	// _mapDownCast[nameTex.first] = tmp;
+	_mapDownCast.push_back(std::make_pair(nameTex.first, tmp));
 }
 
 bool sfmlFramework::createArea(std::pair<int, int> dim, std::pair<int, int> pos,
@@ -163,27 +177,30 @@ bool sfmlFramework::createArea(std::pair<int, int> dim, std::pair<int, int> pos,
 	return true;
 }
 
-/*bool sfmlFramework::loop(void (*func)(void))
-{
-	while (true)
-		func();
-		}*/
-
 template<class T>
 std::pair<int, int> sfmlFramework::_getPosT(std::string name)
 {
-	T *tmp = static_cast<T *>(_mapDownCast[name]);
+	int i = 0;
+	for (std::vector<std::pair<std::string, IShape *>>::iterator it = _mapDownCast.begin();
+		it != _mapDownCast.end(); ++it) {
+		if (it->first == name)
+			break ;
+		++i;
+	}
+	T *tmp = static_cast<T *>(_mapDownCast[i].second);
 
 	return tmp->getPos();
 }
 
 std::pair<int, int> sfmlFramework::getpos(std::string name)
 {
-	if (_mapDownCast.find(name) != _mapDownCast.end()) {
+	if (_mapType.find(name) != _mapType.end()) {
 		switch (_mapType[name]) {
 			case -1:
 				return _getPosT<SfmlManageSprite>(name);
-			case IGraphic::TYPE::RECT:
+			case IGraphic::TYPE::RECT: case IGraphic::TYPE::CHARAC:
+			case IGraphic::TYPE::ENEMY: case IGraphic::TYPE::ITEM:
+			case IGraphic::TYPE::OBSTACLE:
 				return _getPosT<SfmlSquare>(name);
 			case IGraphic::TYPE::TEXT:
 				return _getPosT<SfmlText>(name);
@@ -200,18 +217,27 @@ std::pair<int, int> sfmlFramework::getpos(std::string name)
 template<class T>
 std::pair<int, int> sfmlFramework::_getDimT(std::string name)
 {
-	T *tmp = static_cast<T *>(_mapDownCast[name]);
+	int i = 0;
+	for (std::vector<std::pair<std::string, IShape *>>::iterator it = _mapDownCast.begin();
+		it != _mapDownCast.end(); ++it) {
+		if (it->first == name)
+			break ;
+		++i;
+	}
+	T *tmp = static_cast<T *>(_mapDownCast[i].second);
 
 	return tmp->getDim();
 }
 
 std::pair<int, int> sfmlFramework::getdim(std::string name)
 {
-	if (_mapDownCast.find(name) != _mapDownCast.end()) {
+	if (_mapType.find(name) != _mapType.end()) {
 		switch (_mapType[name]) {
 			case -1:
 				return _getDimT<SfmlManageSprite>(name);
-			case IGraphic::TYPE::RECT:
+			case IGraphic::TYPE::RECT: case IGraphic::TYPE::CHARAC:
+			case IGraphic::TYPE::ENEMY: case IGraphic::TYPE::ITEM:
+			case IGraphic::TYPE::OBSTACLE:
 				return _getDimT<SfmlSquare>(name);
 			case IGraphic::TYPE::TEXT:
 				return _getDimT<SfmlText>(name);
@@ -235,18 +261,27 @@ IGraphic::TYPE sfmlFramework::getType(std::string name)
 template<class T>
 bool sfmlFramework::_setPosT(std::pair<int, int> pos, std::string name)
 {
-	T *tmp = static_cast<T *>(_mapDownCast[name]);
+	int i = 0;
+	for (std::vector<std::pair<std::string, IShape *>>::iterator it = _mapDownCast.begin();
+		it != _mapDownCast.end(); ++it) {
+		if (it->first == name)
+			break ;
+		++i;
+	}
+	T *tmp = static_cast<T *>(_mapDownCast[i].second);
 
 	return tmp->setPos(pos.first, pos.second);
 }
 
 bool sfmlFramework::setpos(std::pair<int, int> pos, std::string name)
 {
-	if (_mapDownCast.find(name) != _mapDownCast.end()) {
+	if (_mapType.find(name) != _mapType.end()) {
 		switch (_mapType[name]) {
 			case -1:
 				return _setPosT<SfmlManageSprite>(pos, name);
-			case IGraphic::TYPE::RECT:
+			case IGraphic::TYPE::RECT: case IGraphic::TYPE::CHARAC:
+			case IGraphic::TYPE::ENEMY: case IGraphic::TYPE::ITEM:
+			case IGraphic::TYPE::OBSTACLE:
 				return _setPosT<SfmlSquare>(pos, name);
 			case IGraphic::TYPE::TEXT:
 				return _setPosT<SfmlText>(pos, name);
@@ -263,18 +298,27 @@ bool sfmlFramework::setpos(std::pair<int, int> pos, std::string name)
 template<class T>
 bool sfmlFramework::_setDimT(std::pair<int, int> dim, std::string name)
 {
-	T *tmp = static_cast<T *>(_mapDownCast[name]);
+	int i = 0;
+	for (std::vector<std::pair<std::string, IShape *>>::iterator it = _mapDownCast.begin();
+		it != _mapDownCast.end(); ++it) {
+		if (it->first == name)
+			break ;
+		++i;
+	}
+	T *tmp = static_cast<T *>(_mapDownCast[i].second);
 
 	return tmp->setDim(dim.first, dim.second);
 }
 
 bool sfmlFramework::setdim(std::pair<int, int> dim, std::string name)
 {
-	if (_mapDownCast.find(name) != _mapDownCast.end()) {
+	if (_mapType.find(name) != _mapType.end()) {
 		switch (_mapType[name]) {
 			case -1:
 				return _setDimT<SfmlManageSprite>(dim, name);
-			case IGraphic::TYPE::RECT:
+			case IGraphic::TYPE::RECT: case IGraphic::TYPE::CHARAC:
+			case IGraphic::TYPE::ENEMY: case IGraphic::TYPE::ITEM:
+			case IGraphic::TYPE::OBSTACLE:
 				return _setDimT<SfmlSquare>(dim, name);
 			case IGraphic::TYPE::TEXT:
 				return _setDimT<SfmlText>(dim, name);
@@ -311,7 +355,14 @@ void sfmlFramework::_strLower(std::string &str)
 template<class T>
 bool sfmlFramework::_displayObjSfml(std::string name)
 {
-	T *tmp = static_cast<T *>(_mapDownCast[name]);
+	int i = 0;
+	for (std::vector<std::pair<std::string, IShape *>>::iterator it = _mapDownCast.begin();
+		it != _mapDownCast.end(); ++it) {
+		if (it->first == name)
+			break ;
+		++i;
+	}
+	T *tmp = static_cast<T *>(_mapDownCast[i].second);
 
 	_window->draw(tmp->getShape());
 	return true;
@@ -324,7 +375,9 @@ bool sfmlFramework::displayObj()
 			case -1:
 				_displayObjSfml<SfmlManageSprite>(it.first);
 				break ;
-			case IGraphic::TYPE::RECT:
+			case IGraphic::TYPE::RECT: case IGraphic::TYPE::CHARAC:
+			case IGraphic::TYPE::ENEMY: case IGraphic::TYPE::ITEM:
+			case IGraphic::TYPE::OBSTACLE:
 				_displayObjSfml<SfmlSquare>(it.first);
 				break ;
 			case IGraphic::TYPE::TEXT:
@@ -348,10 +401,19 @@ bool sfmlFramework::deleteArea(std::string name)
 		_mapPos.erase(name);
 		_mapTex.erase(name);
 		_mapType.erase(name);
-		delete _mapDownCast[name];
-		_mapDownCast.erase(name);
+		// delete _mapDownCast[i].second;
+		for (std::vector<std::pair<std::string, IShape *>>::iterator it = _mapDownCast.begin();
+			it != _mapDownCast.end(); ++it) {
+			if (it->first == name) {
+				_mapDownCast.erase(it);
+				break ;
+			}
+		}
+		// delete _mapDownCast[name];
+		// _mapDownCast.erase(name);
 	} else
-		throw errHand::Error("deleteArea: obj doesn't exist in map");
+		return false;
+		// throw errHand::Error("deleteArea: obj doesn't exist in map");
 	return true;
 }
 

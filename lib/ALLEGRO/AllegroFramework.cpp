@@ -60,27 +60,25 @@ AllegroFramework::AllegroFramework()
 		{"magenta", al_map_rgb(219, 112, 147)},
 		{"cyan", al_map_rgb(0, 255, 255)}
 	};
-	// _allColors = (ALLEGRO_COLOR *)malloc(sizeof(ALLEGRO_COLOR) * 8);
-	// ALLEGRO_COLOR tmp = al_map_rgb(0, 0, 0);
-	// memcpy(_allColors, &tmp, sizeof(ALLEGRO_COLOR));
-	// tmp = al_map_rgb(255, 255, 255);
-	// memcpy(_allColors + (sizeof(ALLEGRO_COLOR) * 1), &tmp, sizeof(ALLEGRO_COLOR));
-	// tmp = al_map_rgb(255, 0, 0);
-	// memcpy(_allColors + (sizeof(ALLEGRO_COLOR) * 2), &tmp, sizeof(ALLEGRO_COLOR));
-	// tmp = al_map_rgb(0, 128, 0);
-	// memcpy(_allColors + (sizeof(ALLEGRO_COLOR) * 3), &tmp, sizeof(ALLEGRO_COLOR));
-	// tmp = al_map_rgb(0, 0, 255);
-	// memcpy(_allColors + (sizeof(ALLEGRO_COLOR) * 4), &tmp, sizeof(ALLEGRO_COLOR));
-	// tmp = al_map_rgb(255, 255, 0);
-	// memcpy(_allColors + (sizeof(ALLEGRO_COLOR) * 5), &tmp, sizeof(ALLEGRO_COLOR));
-	// tmp = al_map_rgb(219,112,147);
-	// memcpy(_allColors + (sizeof(ALLEGRO_COLOR) * 6), &tmp, sizeof(ALLEGRO_COLOR));
-	// tmp = al_map_rgb(0, 255, 255);
-	// memcpy(_allColors + (sizeof(ALLEGRO_COLOR) * 7), &tmp, sizeof(ALLEGRO_COLOR));
 	_pointerFunc.insert(std::make_pair(0, std::bind(&AllegroFramework::_makeArea,
 		this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
 		std::placeholders::_4)));
 	_pointerFunc.insert(std::make_pair(4, std::bind(&AllegroFramework::_makeText,
+		this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
+		std::placeholders::_4)));
+	_pointerFunc.insert(std::make_pair(1, std::bind(&AllegroFramework::_makeArea,
+		this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
+		std::placeholders::_4)));
+	_pointerFunc.insert(std::make_pair(2, std::bind(&AllegroFramework::_makeArea,
+		this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
+		std::placeholders::_4)));
+	_pointerFunc.insert(std::make_pair(3, std::bind(&AllegroFramework::_makeArea,
+		this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
+		std::placeholders::_4)));
+	_pointerFunc.insert(std::make_pair(5, std::bind(&AllegroFramework::_makeArea,
+		this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
+		std::placeholders::_4)));
+	_pointerFunc.insert(std::make_pair(6, std::bind(&AllegroFramework::_makeArea,
 		this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
 		std::placeholders::_4)));
 }
@@ -110,7 +108,7 @@ void AllegroFramework::_makeArea(std::pair<int, int> dim, std::pair<int, int> po
 	_mapPos[nameTex.first] = pos;
 	_mapTex[nameTex.first] = nameTex.second;
 	// _mapType[nameTex.first] = type;
-	_mapType.insert(std::make_pair(nameTex.first, type));
+	_mapType.push_back(std::make_pair(nameTex.first, type));
 }
 
 void AllegroFramework::_makeText(std::pair<int, int> dim, std::pair<int, int> pos,
@@ -120,7 +118,7 @@ void AllegroFramework::_makeText(std::pair<int, int> dim, std::pair<int, int> po
 	_mapPos[nameTex.first] = pos;
 	_mapTex[nameTex.first] = nameTex.second;
 	// _mapType[nameTex.first] = type;
-	_mapType.insert(std::make_pair(nameTex.first, type));
+	_mapType.push_back(std::make_pair(nameTex.first, type));
 	_mapFont[nameTex.first] = al_load_font("fonts/arcade.ttf", dim.first, 0);
 }
 
@@ -133,7 +131,7 @@ bool AllegroFramework::_makeSpriteTex(std::pair<int, int> dim, std::pair<int, in
 	_mapPos[nameTex.first] = pos;
 	_mapTex[nameTex.first] = nameTex.second;
 	// _mapType[nameTex.first] = -1;
-	_mapType.insert(std::make_pair(nameTex.first, -1));
+	_mapType.push_back(std::make_pair(nameTex.first, -1));
 	if (!(_mapSprite[nameTex.first] = al_load_bitmap(nameTex.second.c_str())))
 		return false;
 	return true;
@@ -142,11 +140,11 @@ bool AllegroFramework::_makeSpriteTex(std::pair<int, int> dim, std::pair<int, in
 bool AllegroFramework::createArea(std::pair<int, int> dim, std::pair<int, int> pos,
 	std::pair<std::string, std::string> nameTex, IGraphic::TYPE type)
 {
-	if (_mapType.find(nameTex.first) == _mapType.end() &&
+	if (_mapTex.find(nameTex.first) == _mapTex.end() &&
 		(_colors.find(nameTex.second) != _colors.end() ||
 		type == IGraphic::TYPE::TEXT)) {
 		_pointerFunc[type](dim, pos, nameTex, type);
-	} else if (_mapType.find(nameTex.first) == _mapType.end())
+	} else if (_mapTex.find(nameTex.first) == _mapTex.end())
 		return _makeSpriteTex(dim, pos, nameTex, type);
 	else {
 		throw errHand::Error("createArea: doesn't work");
@@ -170,14 +168,22 @@ std::pair<int, int> AllegroFramework::getdim(std::string name)
 
 IGraphic::TYPE AllegroFramework::getType(std::string name)
 {
-	if (_mapType.find(name) != _mapType.end())
-		return (IGraphic::TYPE)_mapType[name];
+	if (_mapTex.find(name) != _mapTex.end()) {
+		int i = 0;
+		for (std::vector<std::pair<std::string, int>>::iterator it = _mapType.begin();
+			it != _mapType.end(); ++it) {
+			if (it->first == name)
+				break ;
+			++i;
+		}
+		return (IGraphic::TYPE)_mapType[i].second;
+	}
 	throw errHand::Error("getType: invalid name");
 }
 
 bool AllegroFramework::setpos(std::pair<int, int> pos, std::string name)
 {
-	if (_mapType.find(name) != _mapType.end())
+	if (_mapTex.find(name) != _mapTex.end())
 		_mapPos[name] = pos;
 	else
 		return false;
@@ -186,7 +192,7 @@ bool AllegroFramework::setpos(std::pair<int, int> pos, std::string name)
 
 bool AllegroFramework::setdim(std::pair<int, int> dim, std::string name)
 {
-	if (_mapType.find(name) != _mapType.end())
+	if (_mapTex.find(name) != _mapTex.end())
 		_mapDim[name] = dim;
 	else
 		return false;
@@ -239,7 +245,9 @@ bool AllegroFramework::displayObj()
 			case -1:
 				_dispSprite(it.first);
 				break ;
-			case IGraphic::TYPE::RECT:
+			case IGraphic::TYPE::RECT: case IGraphic::TYPE::CHARAC:
+			case IGraphic::TYPE::ENEMY: case IGraphic::TYPE::ITEM:
+			case IGraphic::TYPE::OBSTACLE:
 				_dispRect(it.first);
 				break ;
 			case IGraphic::TYPE::TEXT:
@@ -255,11 +263,17 @@ bool AllegroFramework::displayObj()
 
 bool AllegroFramework::deleteArea(std::string name)
 {
-	if (_mapType.find(name) != _mapType.end()) {
+	if (_mapTex.find(name) != _mapTex.end()) {
 		_mapDim.erase(name);
 		_mapPos.erase(name);
 		_mapTex.erase(name);
-		_mapType.erase(name);
+		for (std::vector<std::pair<std::string, int>>::iterator it = _mapType.begin();
+			it != _mapType.end(); ++it) {
+			if (it->first == name) {
+				_mapType.erase(it);
+				break ;
+			}
+		}
 	} else
 		return false;
 	return true;

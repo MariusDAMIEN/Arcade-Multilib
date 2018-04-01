@@ -13,12 +13,14 @@
 #include <unordered_map>
 #include <map>
 #include <functional>
+#include <vector>
 #include <string>
 #include <iostream>
 #include "IGraphic.hpp"
 #include "SFML/SfmlSquare.hpp"
 #include "SFML/SfmlText.hpp"
 #include "SFML/SfmlManageSprite.hpp"
+#include "IShape.hpp"
 
 typedef std::function<void (std::pair<int, int>, std::pair<int, int>,
 		std::pair<std::string, std::string>, IGraphic::TYPE)> argsArea;
@@ -77,7 +79,7 @@ private:
 	std::unordered_map<std::string, std::string> _mapTex;
 	std::unordered_map<std::string, int> _mapType;
 	// pour displayObj
-	std::map<std::string, IShape *> _mapDownCast;
+	std::vector< std::pair <std::string, IShape * > > _mapDownCast;
 	std::unordered_map<int, argsArea> _pointerFunc;
 	// pour displayObj
 	// std::unordered_map<int, std::function<void (std::string)> > _downCast;

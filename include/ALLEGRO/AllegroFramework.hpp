@@ -66,8 +66,8 @@ private:
 
 	std::unordered_map<std::string, std::pair<int, int>> _mapDim;
 	std::unordered_map<std::string, std::pair<int, int>> _mapPos;
-	std::map<std::string, std::string> _mapTex;
-	std::unordered_map<std::string, int> _mapType;
+	std::unordered_map<std::string, std::string> _mapTex;
+	std::vector< std::pair<std::string, int> > _mapType;
 	std::unordered_map<std::string, ALLEGRO_FONT *> _mapFont;
 	std::unordered_map<std::string, ALLEGRO_BITMAP *> _mapSprite;
 
