@@ -209,10 +209,11 @@ bool AllegroFramework::isKeyPressed(std::string key)
 {
 	_strLower(key);
 	if (_keys.find(key) != _keys.end()) {
-		al_peek_next_event(_event_queue, &_event);
-		if (al_drop_next_event(_event_queue)) {
-			if (_event.keyboard.keycode == _keys[key])
-				return true;
+		usleep(2000);
+		al_get_keyboard_state(&stateKey);
+		if (al_key_down(&stateKey, _keys[key])) {
+			usleep(97000);
+			return true;
 		}
 	}
 	return false;

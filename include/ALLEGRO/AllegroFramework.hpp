@@ -21,6 +21,7 @@
 #include <allegro5/allegro_image.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "IGraphic.hpp"
 
 typedef std::function<void (std::pair<int, int>, std::pair<int, int>,
@@ -60,6 +61,7 @@ private:
 	ALLEGRO_EVENT_QUEUE *_event_queue;
 	ALLEGRO_EVENT _event;
 	ALLEGRO_FONT *_font;
+	ALLEGRO_KEYBOARD_STATE stateKey;
 	std::unordered_map<std::string, int> _keys;
 	std::unordered_map<std::string, ALLEGRO_COLOR> _colors;
 	ALLEGRO_COLOR *_allColors;
