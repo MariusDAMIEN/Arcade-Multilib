@@ -27,17 +27,15 @@ class IGraphic
  		CHARAC,
  		ENEMY,
 		TEXT,
-		ITEM,/* Rectangle Malus , Bonus */
+		ITEM,
 		OBSTACLE
  	};
 
  	virtual ~IGraphic() = default;
 	virtual	bool createWindow(std::pair<int, int> dim, std::string name) = 0;
-		// erease all of window
 	virtual	bool clearWindow() = 0;
 	virtual	bool createArea(std::pair<int, int> dim, std::pair<int, int> pos,
 		std::pair<std::string, std::string> nameTex, TYPE type) = 0;
-//	virtual	bool loop(void (*func)(void)) = 0;
 	virtual	std::pair<int, int> getpos(std::string name) = 0;
 	virtual	std::pair<int, int> getdim(std::string name) = 0;
 	virtual IGraphic::TYPE getType(std::string name) = 0;
