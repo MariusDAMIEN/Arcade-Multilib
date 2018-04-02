@@ -43,8 +43,9 @@ SRCSSFML	=	$(DIRLIB)SFML/sfmlFramework.cpp	\
 			$(DIRLIB)SFML/SfmlCircle.cpp	\
 			$(DIRLIB)SFML/SfmlManageSprite.cpp
 
-SRCSNCURSE	=	$(DIRLIB)NCURSE/ncurseFramework.cpp	\
+SRCSNCURSE	=	$(DIRLIB)NCURSE2/ncurseFramework.cpp	\
 			$(DIR)errorHandling.cpp	\
+			$(DIRLIB)NCURSE2/ShapeN.cpp
 
 SRCSALLEGRO	=	$(DIRLIB)ALLEGRO/AllegroFramework.cpp	\
 			$(DIR)errorHandling.cpp
