@@ -46,6 +46,7 @@ class IGraphic
 	virtual	bool deleteArea(std::string name) = 0;
 	virtual bool changeTexture(std::string name, std::string path) = 0;
 	virtual bool destroyWindow() = 0;
+	virtual bool destroyAllArea() = 0;
 };
 
 #endif /* !_IGRAPHIC_HPP_ */

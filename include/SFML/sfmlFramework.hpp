@@ -47,6 +47,7 @@ public:
 	bool deleteArea(std::string name) override;
 	bool changeTexture(std::string name, std::string path) override;
 	bool destroyWindow() override;
+	bool destroyAllArea() override;
 private:
 	void _strLower(std::string &str);
 	void _rectangle(std::pair<int, int> dim, std::pair<int, int> pos,
@@ -80,6 +81,7 @@ private:
 	std::unordered_map<std::string, int> _mapType;
 	// pour displayObj
 	std::vector< std::pair <std::string, IShape * > > _mapDownCast;
+	
 	std::unordered_map<int, argsArea> _pointerFunc;
 	// pour displayObj
 	// std::unordered_map<int, std::function<void (std::string)> > _downCast;
