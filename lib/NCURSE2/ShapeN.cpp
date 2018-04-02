@@ -24,12 +24,37 @@ ShapeN::ShapeN(std::pair<int, int> dim, std::pair<int, int> pos, int color,
 	_color = color;
 	_type = type;
 	_typeChar = _tabType[type];
-	// _win = win;
-	// _win = newwin(1200, 800, 0, 0);
+}
+
+ShapeN::ShapeN(std::pair<int, int> dim, std::pair<int, int> pos, int color,
+	std::string text)
+{
+	_tabType = {
+		{0, 'x'},
+		{1, 'o'},
+		{2, 'I'},
+		{3, '!'},
+		{4, 'x'},
+		{5, '$'},
+		{6, '#'}
+	};
+	// exit(dim.first);
+	_dim = dim;
+	_pos = pos;
+	_color = color;
+	_type = IGraphic::TYPE::TEXT;
+	_strLower(text);
+	_text = text;
 }
 
 ShapeN::~ShapeN()
 {}
+
+void ShapeN::_strLower(std::string &str)
+{
+	for (unsigned int i = 0; i < str.length(); ++i)
+		str[i] = tolower(str[i]);
+}
 
 std::pair<int, int> ShapeN::getPos() const
 {
@@ -75,13 +100,80 @@ bool ShapeN::setPos(std::pair<int, int> pos)
 	return true;
 }
 
+bool ShapeN::_verifFile(const std::string &file, int &x, int &y)
+{
+	std::fstream fs;
+	std::string line;
+	int posLine = y;
+	int size = _dim.first * 10;
+	bool isOpen = false;
+
+	while (isOpen == false) {
+		if (size < 10)
+			break ;
+		fs.open(DIRFONT + file + std::to_string(size), std::fstream::in);
+		size -= 10;
+		isOpen = fs.is_open();
+	}
+	if (fs.is_open()) {
+		while (std::getline(fs, line)) {
+			// exit(8);
+			mvprintw(posLine, x, "%s", line.c_str());
+			++posLine;
+		}
+		// exit(7);
+		x = x + _dim.first;
+		// exit(_dim.first);
+		fs.close();
+	} else {
+		// std::cout << DIRFONT + file << std::endl;
+		// exit(9);
+		return false;
+	}
+	return true;
+}
+
+void ShapeN::_drawText()
+{
+	// int sizeC = _dim.first * 10;
+	int x = _pos.first;
+	int y = _pos.second;
+	int div;
+	// exit(x);
+
+	for (auto c : _text) {
+		if (c == '\n') {
+			div = (int)ceil((_dim.first + 1) / 2);
+			y = _pos.second + div + 1;
+			x = _pos.first;
+		} else if (c == ' ' || c == '\'') {
+			mvprintw(y, x, "%c", c);
+			x += 1;
+		} else if (!_verifFile(std::string(1, c) + ".", x, y)) {
+			// printf("%c\n", c);
+			// exit(0);
+			mvprintw(y, x, "%c", c);
+			x += _dim.first;
+		}
+	}
+}
+
 void ShapeN::draw()
 {
-	for (int y = _pos.second; y < (_pos.second + _dim.second); ++y) {
-		for (int x = _pos.first; x < (_pos.first + _dim.first); ++x) {
-			attron(COLOR_PAIR(_color));
-			mvprintw(y, x, "%c", _typeChar);
-			attroff(COLOR_PAIR(_color));
+	// static int i = 0;
+
+	if (_type == IGraphic::TYPE::TEXT) {
+		// mvprintw(i, 0, "lol");
+		// ++i;
+		// mvprintw(0, 0, "lol");
+		_drawText();
+	} else {
+		for (int y = _pos.second; y < (_pos.second + _dim.second); ++y) {
+			for (int x = _pos.first; x < (_pos.first + _dim.first); ++x) {
+				attron(COLOR_PAIR(_color));
+				mvprintw(y, x, "%c", _typeChar);
+				attroff(COLOR_PAIR(_color));
+			}
 		}
 	}
 	// while (1) {

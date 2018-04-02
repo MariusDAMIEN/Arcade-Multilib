@@ -141,6 +141,33 @@ void ncurseFramework::_makeShape(std::pair<int, int> dim, std::pair<int, int> po
 	_mapShape.push_back(std::make_pair(nameTex.first, tmp));
 }
 
+void ncurseFramework::_makeText(std::pair<int, int> dim, std::pair<int, int> pos,
+	std::pair<std::string, std::string> nameTex, IGraphic::TYPE type)
+{
+	ShapeN *tmp;
+
+	(void)type;
+	if (pos.first < 10)
+		pos.first = 10;
+	if (pos.second < 20)
+		pos.second = 20;
+	if (dim.first < 20)
+		dim.first = 20;
+	if (dim.second < 20)
+		dim.second = 20;
+	pos.first = (int)floor((pos.first) / 10);
+	pos.second = (int)floor((pos.second) / 20);
+	dim.first = (int)floor((dim.first) / 20);
+	dim.second = (int)floor((dim.second) / 20);
+	if (pos.first < 1 || pos.second < 1 || dim.first < 1 || dim.second < 1)
+		throw errHand::Error("createArea: dim or pos too little");
+	pos.first += 1;
+	pos.second += 1;
+	// printf("%d %d %d %d\n", pos.first, pos.second, dim.first, dim.second);
+	tmp = new ShapeN(dim, pos, _colors[nameTex.second], nameTex.second);
+	_mapShape.push_back(std::make_pair(nameTex.first, tmp));
+}
+
 bool ncurseFramework::createArea(std::pair<int, int> dim, std::pair<int, int> pos,
 	std::pair<std::string, std::string> nameTex, IGraphic::TYPE type)
 {
@@ -152,10 +179,14 @@ bool ncurseFramework::createArea(std::pair<int, int> dim, std::pair<int, int> po
 		if (_colors.find(nameTex.second) != _colors.end())
 			_makeShape(dim, pos, nameTex, type);
 		else {
-			nameTex.second = "white";
-			_makeShape(dim, pos, nameTex, type);
+			// nameTex.second = "white";
+			// _makeShape(dim, pos, nameTex, type);
+			return false;
 		}
-	}
+	} else if (type == IGraphic::TYPE::TEXT) {
+		_makeText(dim, pos, nameTex, type);
+	}else
+		return false;
 	return true;
 }
 
@@ -242,6 +273,8 @@ bool ncurseFramework::deleteArea(std::string name)
 
 bool ncurseFramework::changeTexture(std::string name, std::string path)
 {
+	(void)name;
+	(void)path;
 	return true;
 }
 

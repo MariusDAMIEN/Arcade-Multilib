@@ -49,7 +49,8 @@ public:
 	bool changeTexture(std::string name, std::string path) override;
 	bool destroyWindow() override;
 private:
-	// void _display(ShapeN *);
+	void _makeText(std::pair<int, int> dim, std::pair<int, int> pos,
+		std::pair<std::string, std::string> nameTex, IGraphic::TYPE type);
 	void _makeShape(std::pair<int, int> dim, std::pair<int, int> pos,
 		std::pair<std::string, std::string> nameTex, IGraphic::TYPE type);
 	std::vector<char> _mapWindow;
