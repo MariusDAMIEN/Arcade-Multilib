@@ -36,10 +36,10 @@ ncurseFramework::ncurseFramework()
 		{"y", 'y'},
 		{"z", 'z'},
 		{"space", ' '},
-		{"left", KEY_LEFT},
-		{"right", KEY_RIGHT},
-		{"up", KEY_UP},
-		{"down", KEY_DOWN},
+		{"left", 4},
+		{"right", 5},
+		{"up", 3},
+		{"down", 2},
 		{"escape", 27}
 	};
 	_colors = {
