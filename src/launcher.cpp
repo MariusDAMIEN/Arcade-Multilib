@@ -51,24 +51,27 @@ int launcher::load_first_lib()
 
 int launcher::load_first_game()
 {
-        void* handle = dlopen(_lgame.c_str(), RTLD_LAZY);
-        std::cout << _lgame << std::endl;
+        void* handle = dlopen(_nameGame.c_str(), RTLD_LAZY);
+        std::cout << _nameGame << std::endl;
         if (!handle)
-                throw errHand::Error(std::string("Cannot open library: ")
+                throw errHand::Error(std::string("Cannot open game: ")
                                      + std::string(dlerror()));
         dlerror();
-        create_t *create = (create_t*) dlsym(handle, "create");
+        start_t *start = (start_t*) dlsym(handle, "start");
         const char *dlsym_error = dlerror();
         if (dlsym_error) {
-                throw errHand::Error(std::string("Cannot load symbol 'create': ")
+                throw errHand::Error(std::string("Cannot load symbol 'start': ")
                                      + std::string(dlsym_error));
                 dlclose(handle);
                 return 1;
         }
-        _igraph = create();
+        _igraph->destroyAllArea();
+        _igraph->destroyWindow();
+        _game = start(_igraph);
         _handleGame = handle;
         return (0);
 }
+
 
 void launcher::next_lib()
 {
@@ -193,11 +196,11 @@ void launcher::input_name()
    if (_sel != 1) {
      _igraph->destroyAllArea();
     _igraph->createArea(std::make_pair(50, 50), std::make_pair(30, 300)
-                        , std::make_pair("inputname", "Please Input your name press \"z\" to continue : ")
+                        , std::make_pair("inputname", "Please Input your name press \"up\" to continue : ")
                         , IGraphic::TYPE::TEXT);
     _sel = 1;
   }
-  while (_igraph->isKeyPressed("z") == false) {
+  while (_igraph->isKeyPressed("up") == false) {
     if (_igraph->isKeyPressed("a")) {
       _name += "A";
       printName();
@@ -298,15 +301,14 @@ void launcher::input_name()
       _name += "Y";
       printName();
     }
-    /*    if (_igraph->isKeyPressed("z")) {
+    if (_igraph->isKeyPressed("z")) {
       _name += "Z";
       printName();
-      }*/
+      }
     _igraph->displayObj();
     _igraph->clearWindow();
     }
-  exit(9);
-
+  load_first_game();
 }
 
 bool  launcher::loop()
@@ -342,7 +344,7 @@ bool  launcher::loop()
                   }
                   _igraph->setpos(_select, "select");
                 }
-                if (_igraph->isKeyPressed("c") == true || _sel == 2) {
+                if (_igraph->isKeyPressed("right") == true || _sel == 2) {
                   catch_game();
                   input_name();
                 }

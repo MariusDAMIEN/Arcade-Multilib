@@ -22,6 +22,7 @@
 #include "IGame.hpp"
 
 typedef IGraphic* create_t();
+typedef IGame* start_t(IGraphic*);
 
 class launcher {
 public:
@@ -35,13 +36,12 @@ public:
         void change_lib(const char *lib);
         void  display_lib();
         void  display_game();
-	void  catch_game();
-	void input_name();
-	void printName();
+        void  catch_game();
+        void input_name();
+        void printName();
 private:
         void next_lib();
         std::string _lib;
-        std::string _lgame;
         void const *_handleGame;
         std::vector<std::string> _vectLib;
         std::vector<std::string> _vectGame;
@@ -50,13 +50,13 @@ private:
         void const * _handle;
         IGraphic *_igraph;
         IGame   *_game;
-	int	_sel;
-	bool _initName;
-	std::pair<int, int> _posName;
-	std::string _name;
-	int	_gameIndex;
-	int	_nbGame;
-	std::string _nameGame;
+        int	_sel;
+        bool _initName;
+        std::pair<int, int> _posName;
+        std::string _name;
+        int	_gameIndex;
+        int	_nbGame;
+        std::string _nameGame;
 };
 
 #endif /* !_LAUNCHER_HPP_ */

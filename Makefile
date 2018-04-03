@@ -15,9 +15,11 @@ ALLEGRO	= lib_arcade_allegro.so
 
 SOLARFOX	= lib_arcade_solarfox.so
 
+CENTIPEDE	= lib_arcade_centipede.so
+
 LDFLAGS	=	-l_arcade_sfml -l_arcade_ncurse -l_arcade_allegro
 
-LDFLAGSGAME	=	-l_arcade_solarfox
+LDFLAGSGAME	=	-l_arcade_solarfox -l_arcade_centipede
 
 CC	= g++
 
@@ -52,6 +54,8 @@ SRCSALLEGRO	=	$(DIRLIB)ALLEGRO/AllegroFramework.cpp	\
 
 SRCSSOLAR	=	$(DIRGAME)solarFox/solarFox.cpp
 
+SRCSCENTI	=	$(DIRGAME)centipede/centipede.cpp
+
 OBJS	= $(SRCS:.cpp=.o)
 
 OBJSSFML	= $(SRCSSFML:.cpp=.o)
@@ -62,6 +66,8 @@ OBJSALLEGRO	= $(SRCSALLEGRO:.cpp=.o)
 
 OBJSSOLAR	= $(SRCSSOLAR:.cpp=.o)
 
+OBJSCENTI	= $(SRCSCENTI:.cpp=.o)
+
 CXXFLAGS = -I./include
 
 CXXFLAGS += -Wall -Wextra -fPIC -std=c++14 -g3 -ldl
@@ -70,12 +76,15 @@ all: graphicals games core
 
 graphicals: $(SFML) $(NCURSE) $(ALLEGRO)
 
-games: $(SOLARFOX)
+games: $(SOLARFOX) $(CENTIPEDE)
 
 core: $(NAME)
 
 $(SOLARFOX): $(OBJSSOLAR)
 	$(CC) $(OBJSSOLAR) -shared -o $(DIRGAME)$(SOLARFOX)
+
+$(CENTIPEDE): $(OBJSCENTI)
+	$(CC) $(OBJSCENTI) -shared -o $(DIRGAME)$(CENTIPEDE)
 
 $(SFML): $(OBJSSFML)
 	$(CC) $(OBJSSFML) -shared -o $(DIRLIB)$(SFML) -lsfml-graphics -lsfml-window -lsfml-system
@@ -95,6 +104,7 @@ clean:
 	$(RM) $(OBJSNCURSE)
 	$(RM) $(OBJSALLEGRO)
 	$(RM) $(OBJSSOLAR)
+	$(RM) $(OBJSCENTI)
 
 fclean: clean
 	$(RM) $(NAME)
@@ -102,6 +112,7 @@ fclean: clean
 	$(RM) $(DIRLIB)$(NCURSE)
 	$(RM) $(DIRLIB)$(ALLEGRO)
 	$(RM) $(DIRGAME)$(SOLARFOX)
+	$(RM) $(DIRGAME)$(CENTIPEDE)
 
 re: fclean all
 
