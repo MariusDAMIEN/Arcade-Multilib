@@ -284,6 +284,12 @@ bool ncurseFramework::destroyWindow()
 	return true;
 }
 
+bool ncurseFramework::destroyAllArea()
+{
+	_mapShape.clear();
+	return true;
+}
+
 extern "C" IGraphic *create()
 {
 	return new ncurseFramework();

@@ -32,20 +32,21 @@ class AllegroFramework : public IGraphic
 public:
 	AllegroFramework();
 	~AllegroFramework();
-	bool createWindow(std::pair<int, int> dim, std::string name);
-	bool clearWindow();
+	bool createWindow(std::pair<int, int> dim, std::string name) override;
+	bool clearWindow() override;
 	bool createArea(std::pair<int, int> dim, std::pair<int, int> pos,
-		std::pair<std::string, std::string> nameTex, TYPE type);
-	std::pair<int, int> getpos(std::string name);
-	std::pair<int, int> getdim(std::string name);
-	IGraphic::TYPE getType(std::string name);
-	bool setpos(std::pair<int, int> pos, std::string name);
-	bool setdim(std::pair<int, int> dim, std::string name);
-	bool isKeyPressed(std::string key);
-	bool displayObj();
-	bool deleteArea(std::string name);
-	bool changeTexture(std::string name, std::string path);
-	bool destroyWindow();
+		std::pair<std::string, std::string> nameTex, TYPE type) override;
+	std::pair<int, int> getpos(std::string name) override;
+	std::pair<int, int> getdim(std::string name) override;
+	IGraphic::TYPE getType(std::string name) override;
+	bool setpos(std::pair<int, int> pos, std::string name) override;
+	bool setdim(std::pair<int, int> dim, std::string name) override;
+	bool isKeyPressed(std::string key) override;
+	bool displayObj() override;
+	bool deleteArea(std::string name) override;
+	bool changeTexture(std::string name, std::string path) override;
+	bool destroyWindow() override;
+	bool destroyAllArea() override;
 private:
 	void _dispSprite(std::string name);
 	bool _makeSpriteTex(std::pair<int, int> dim, std::pair<int, int> pos,

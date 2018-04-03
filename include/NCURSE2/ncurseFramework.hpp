@@ -48,6 +48,7 @@ public:
 	bool deleteArea(std::string name) override;
 	bool changeTexture(std::string name, std::string path) override;
 	bool destroyWindow() override;
+	bool destroyAllArea() override;
 private:
 	void _makeText(std::pair<int, int> dim, std::pair<int, int> pos,
 		std::pair<std::string, std::string> nameTex, IGraphic::TYPE type);
@@ -59,6 +60,7 @@ private:
 	int _height;
 	std::string _nameWindow;
 	std::vector< std::pair<std::string, ShapeN *> > _mapShape;
+
 	std::unordered_map<std::string, int> _colors;
 	std::unordered_map<std::string, char> _keys;
 	char _ch;

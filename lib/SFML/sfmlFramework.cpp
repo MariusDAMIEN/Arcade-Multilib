@@ -438,6 +438,16 @@ bool sfmlFramework::destroyWindow()
 	return true;
 }
 
+bool sfmlFramework::destroyAllArea()
+{
+	_mapDownCast.clear();
+	_mapType.clear();
+	_mapTex.clear();
+	_mapPos.clear();
+	_mapDim.clear();
+	return true;
+}
+
 extern "C" IGraphic *create()
 {
 	return new sfmlFramework();

@@ -296,6 +296,17 @@ bool AllegroFramework::destroyWindow()
 	return true;
 }
 
+bool AllegroFramework::destroyAllArea()
+{
+	_mapDim.clear();
+	_mapPos.clear();
+	_mapTex.clear();
+	_mapType.clear();
+	_mapFont.clear();
+	_mapSprite.clear();
+	return true;
+}
+
 extern "C" IGraphic *create()
 {
 	return new AllegroFramework();
