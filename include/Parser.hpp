@@ -20,9 +20,9 @@
 #define WIDTH 1200
 #endif /* !WIDTH */
 
-#ifndef WEIGHT
+#ifndef HEIGHT
 #define HEIGHT 800
-#endif /* !WEIGHT */
+#endif /* !HEIGHT */
 
 class Parser {
 public:

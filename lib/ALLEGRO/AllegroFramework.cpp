@@ -30,6 +30,7 @@ AllegroFramework::AllegroFramework()
 		{"i", ALLEGRO_KEY_I},
 		{"j", ALLEGRO_KEY_J},
 		{"k", ALLEGRO_KEY_K},
+    {"l", ALLEGRO_KEY_L},
 		{"m", ALLEGRO_KEY_M},
 		{"n", ALLEGRO_KEY_N},
 		{"o", ALLEGRO_KEY_O},

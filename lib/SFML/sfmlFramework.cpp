@@ -29,6 +29,7 @@ sfmlFramework::sfmlFramework()
 		{"i", sf::Keyboard::I},
 		{"j", sf::Keyboard::J},
 		{"k", sf::Keyboard::K},
+    {"l", sf::Keyboard::L},
 		{"m", sf::Keyboard::M},
 		{"n", sf::Keyboard::N},
 		{"o", sf::Keyboard::O},
