@@ -68,6 +68,7 @@ bool ncurseFramework::createWindow(std::pair<int, int> dim, std::string name)
 	init_pair(6, COLOR_CYAN, COLOR_BLACK);
 	init_pair(7, COLOR_WHITE, COLOR_BLACK);
 	init_pair(8, COLOR_BLACK, COLOR_BLACK);
+	keypad(stdscr, TRUE);
 	refresh();
 	noecho();
 	if (dim.first < 10)
