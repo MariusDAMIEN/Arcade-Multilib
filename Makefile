@@ -5,6 +5,8 @@
 ## 
 ##
 
+export MAKEFLAGS="-i"
+
 NAME	= arcade
 
 SFML	= lib_arcade_sfml.so
@@ -72,7 +74,7 @@ CXXFLAGS = -I./include
 
 CXXFLAGS += -Wall -Wextra -fPIC -std=c++14 -g3 -ldl
 
-all: graphicals games core
+all: core graphicals games
 
 graphicals: $(SFML) $(NCURSE) $(ALLEGRO)
 
