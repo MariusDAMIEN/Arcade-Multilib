@@ -74,7 +74,7 @@ CXXFLAGS = -I./include
 
 CXXFLAGS += -Wall -Wextra -fPIC -std=c++14 -g3 -ldl
 
-all: core graphicals games
+all: graphicals games core
 
 graphicals: $(SFML) $(NCURSE) $(ALLEGRO)
 
