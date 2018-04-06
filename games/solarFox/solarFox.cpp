@@ -5,7 +5,7 @@
 // 
 //
 
-#include "SFML/sfmlFramework.hpp"
+// #include "SFML/sfmlFramework.hpp"
 // #include "SFML/SfmlSquare.hpp"
 
 void solarFox()
