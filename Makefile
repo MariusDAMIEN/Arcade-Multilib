@@ -37,7 +37,7 @@ SRCS	=	$(DIR)main.cpp	\
 		$(DIR)launcher.cpp	\
 		$(DIR)SmartPointer/SmartPointer.cpp	\
 		$(DIR)errorHandling.cpp	\
-		$(DIR)Parser.cpp						\
+		$(DIR)Parser.cpp	\
 
 
 SRCSSFML	=	$(DIRLIB)SFML/sfmlFramework.cpp	\
@@ -56,7 +56,10 @@ SRCSALLEGRO	=	$(DIRLIB)ALLEGRO/AllegroFramework.cpp	\
 
 SRCSSOLAR	=	$(DIRGAME)solarFox/solarFox.cpp
 
-SRCSCENTI	=	$(DIRGAME)centipede/centipede.cpp
+SRCSCENTI	=	$(DIRGAME)centipede/centipede.cpp \
+			$(DIRGAME)centipede/bodyGestion.cpp \
+			$(DIRGAME)centipede/player.cpp	\
+			$(DIRGAME)centipede/shoot.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 
