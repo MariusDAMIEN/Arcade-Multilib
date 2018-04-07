@@ -39,7 +39,7 @@ public:
 //	bool loop(void (*func)(void)) override;
 	std::pair<int, int> getpos(std::string name) override;
 	std::pair<int, int> getdim(std::string name) override;
-	IGraphic::TYPE getType(std::string name);
+	IGraphic::TYPE getType(std::string name) override;
 	bool setpos(std::pair<int, int> pos, std::string name) override;
 	bool setdim(std::pair<int, int> dim, std::string name) override;
 	bool isKeyPressed(std::string key) override;

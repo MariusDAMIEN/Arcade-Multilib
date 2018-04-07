@@ -21,6 +21,8 @@ ncurseFramework::ncurseFramework()
 		{"h", 'h'},
 		{"i", 'i'},
 		{"j", 'j'},
+		{"k", 'k'},
+		{"l", 'l'},
 		{"m", 'm'},
 		{"n", 'n'},
 		{"o", 'o'},
@@ -180,9 +182,9 @@ bool ncurseFramework::createArea(std::pair<int, int> dim, std::pair<int, int> po
 		if (_colors.find(nameTex.second) != _colors.end())
 			_makeShape(dim, pos, nameTex, type);
 		else {
-			// nameTex.second = "white";
-			// _makeShape(dim, pos, nameTex, type);
-			return false;
+			nameTex.second = "white";
+			_makeShape(dim, pos, nameTex, type);
+			return true;
 		}
 	} else if (type == IGraphic::TYPE::TEXT) {
 		_makeText(dim, pos, nameTex, type);

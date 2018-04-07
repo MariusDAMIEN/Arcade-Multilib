@@ -6,7 +6,6 @@
 //
 
 #include <unistd.h>
-#include "NCURSE/ncurseFramework.hpp"
 #include "launcher.hpp"
 #include "Parser.hpp"
 #include "menu.hpp"
