@@ -72,6 +72,11 @@ void Bug::setSize(int size)
         _size = size;
 }
 
+void Bug::setCent(std::vector<Bug> &cent)
+{
+  _cent = cent;
+}
+
 void Bug::setMush(std::vector< std::pair<int, int> > const &mush)
 {
         _mush = mush;
@@ -129,9 +134,38 @@ void Bug::changeDir()
         changePos();
 }
 
-void Bug::splitBody()
+void Bug::splitBody(Body &body)
 {
-        
+        int i = 0;
+        std::pair<int, int> pos;
+        int j;
+
+        for (auto &it : _part) {
+                if (body.getPos() == it.getPos()) {
+                        pos = it.getPos();
+                        if (body.getDir() == Body::DIRECTION::RIGHT) {
+                          pos.first -= 30;
+                          Bug tmp(_size - i, pos, Body::DIRECTION::LEFT, _igraph);
+                          _cent.push_back(tmp);
+                          tmp.setCent(_cent);
+                          printf("ahhhahaha\n");
+                          j = i;
+                        }
+                        else if (body.getDir() == Body::DIRECTION::LEFT) {
+                          pos.first += 30;
+                          //                          Bug tmp(_size - i, pos, Body::DIRECTION::RIGHT, _igraph);
+                          //                          _cent.push_back(tmp);
+                          //                          tmp.setCent(_cent);
+                          _part.erase(_part.begin()+i);
+                          printf("ahhhahaha\n");
+                        }
+                }
+                //                _part.erase(_part.begin()+i);
+                i++;
+        }
+        // for (auto &it = _part.begin() + j; it != _part.end() - 1; it++) {
+        //   _part.erase(it);
+        //   printf("loop??\n");}
 }
 
 void Bug::printBody()

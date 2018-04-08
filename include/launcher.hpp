@@ -23,6 +23,7 @@
 
 typedef IGraphic* create_t();
 typedef IGame* start_t(IGraphic*);
+typedef void end_t(IGame *);
 
 class launcher {
 public:
@@ -41,11 +42,13 @@ public:
         void printName();
 private:
         void next_lib();
+        void nextGame();
         std::string _lib;
         void const *_handleGame;
         std::vector<std::string> _vectLib;
         std::vector<std::string> _vectGame;
         std::vector<std::string>::iterator _libIt;
+        std::vector<std::string>::iterator _gameIt;
         std::pair<int, int> _select;
         void const * _handle;
         IGraphic *_igraph;

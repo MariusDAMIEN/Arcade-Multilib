@@ -43,7 +43,8 @@ void Shoot::checkCol()
                         if ((it2.getPos().first >= _pos.first && it2.getPos().first <= _pos.first + 30)
                             && (it2.getPos().second >= _pos.second
                                 && it2.getPos().second <= _pos.second + 30)) {
-                                printf("test\n");
+                                it.splitBody(it2);
+                                break;
                 }
         }
 }

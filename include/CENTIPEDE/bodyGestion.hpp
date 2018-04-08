@@ -49,17 +49,19 @@ public:
         ~Bug();
         int       getSize();
         void      setSize(int size);
+        void      setCent(std::vector<Bug> &);
         std::vector<Body> getBodies();
         void      setMush(std::vector< std::pair<int, int> > const &);
         bool      checkMush(Body &, int);
         void      changePos();
         void      changeDir();
-        void      splitBody();
+        void      splitBody(Body &body);
         void      printBody();
 private:
         int _size;
         IGraphic *_igraph;
         std::vector<Body> _part;
+        std::vector<Bug>  _cent;
         std::vector< std::pair<int, int> > _mush;
 };
 

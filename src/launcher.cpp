@@ -10,6 +10,17 @@
 #include "Parser.hpp"
 #include "menu.hpp"
 
+int launch(char *lib)
+{
+        launcher go(lib);
+
+        go.load_first_lib();
+        //go.windowcreation();
+        go.loop();
+        return (0);
+}
+
+
 launcher::launcher(const char *lib)
 {
         _lib = "./lib/" + std::string(lib);
@@ -50,6 +61,7 @@ int launcher::load_first_lib()
 
 int launcher::load_first_game()
 {
+        int ret;
         void* handle = dlopen(_nameGame.c_str(), RTLD_LAZY);
         std::cout << _nameGame << std::endl;
         if (!handle)
@@ -57,6 +69,7 @@ int launcher::load_first_game()
                                      + std::string(dlerror()));
         dlerror();
         start_t *start = (start_t*) dlsym(handle, "start");
+        end_t *end = (end_t*)dlsym(handle, "end");
         const char *dlsym_error = dlerror();
         if (dlsym_error) {
                 throw errHand::Error(std::string("Cannot load symbol 'start': ")
@@ -67,6 +80,23 @@ int launcher::load_first_game()
         _igraph->destroyAllArea();
         _igraph->destroyWindow();
         _game = start(_igraph);
+        if ((ret = _game->loop()) == 42) {
+                next_lib();
+                _game->changeLib(_igraph);
+        }
+        else if (ret == 84) {
+                end(_game);
+                _igraph->destroyWindow();
+                _igraph->destroyAllArea();
+                _sel = 0;
+                loop();
+        }
+        else if (ret == 0) {
+                nextGame();
+        }
+        std::cout << "return ==== "
+                  << ret
+                  << std::endl;
         _handleGame = handle;
         return (0);
 }
@@ -86,6 +116,19 @@ void launcher::next_lib()
         loop();
 }
 
+void launcher::nextGame()
+{
+        _igraph->destroyWindow();
+        dlclose((void *)_handleGame);
+        _gameIt++;
+        if (_gameIt == _vectGame.end())
+                _gameIt = _vectGame.begin();
+        _nameGame = *_libIt;
+        std::cout << "on load : " + _nameGame << std::endl;
+        load_first_game();
+}
+
+
 void launcher::load_game(const char *dir_name)
 {
         DIR *dir = opendir(dir_name);
@@ -101,6 +144,7 @@ void launcher::load_game(const char *dir_name)
                         _vectGame.push_back(path);
                 }
         }
+        _gameIt = _vectGame.begin();
         closedir(dir);
 }
 
@@ -312,6 +356,7 @@ void launcher::input_name()
 
 bool  launcher::loop()
 {
+        printf("ONrevient dans la loop\n");
   _igraph->createWindow(std::make_pair(WIDTH, HEIGHT), "oklm");
   if (_sel == 0) {
     _igraph->createArea(std::make_pair(200, 200), std::make_pair(250, 0)
@@ -355,15 +400,4 @@ bool  launcher::loop()
 void launcher::windowcreation()
 {
         _igraph->createWindow(std::make_pair(WIDTH, HEIGHT), "oklm");
-}
-
-
-int launch(char *lib)
-{
-        launcher go(lib);
-
-        go.load_first_lib();
-        //go.windowcreation();
-        go.loop();
-        return (0);
 }

@@ -16,7 +16,7 @@ class Centipede : public IGame
 public:
         Centipede(IGraphic *);
         ~Centipede();
-        int loop();
+        int loop() override;
         void changeLib(IGraphic *) override;
         void displayMush();
 	void algo();

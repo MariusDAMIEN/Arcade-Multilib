@@ -9,7 +9,7 @@
 
 Centipede::Centipede(IGraphic *igraph) : _igraph(igraph)
 {
-  loop();
+	//  loop();
 }
 
 Centipede::~Centipede()
@@ -58,6 +58,7 @@ void Centipede::initCent()
   Player player(_igraph, std::make_pair(WIDTH - 300, HEIGHT - 300));
   _player.push_back(player);
   _bodies.push_back(test);
+  test.setCent(_bodies);
 }
 
 void Centipede::algo()
@@ -130,5 +131,10 @@ void Centipede::changeLib(IGraphic *igraph)
 extern "C" IGame *start(IGraphic *lib)
 {
 	return new Centipede(lib);
+}
+
+extern "C" void end(IGame *game)
+{
+        delete game;
 }
 

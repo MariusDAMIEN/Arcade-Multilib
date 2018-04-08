@@ -13,7 +13,9 @@
 class IGame
 {
 public:
+        virtual ~IGame() = default;
         virtual void changeLib(IGraphic *) = 0;
+        virtual int loop() = 0;
 };
 
 
