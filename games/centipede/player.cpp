@@ -48,23 +48,18 @@ void Player::shootGestion(void)
 void Player::moove(void)
 {
         if (_igraph->isKeyPressed("right") == true) {
-                printf("RIGHT ===> OK\n");
                 _pos.first += 30;
         }
         if (_igraph->isKeyPressed("left") == true) {
-                printf("left ===> OK\n");
                 _pos.first -= 30;
         }
         if (_igraph->isKeyPressed("down") == true) {
-                printf("DOWN ===> OK\n");
                 _pos.second += 30;
         }
         if (_igraph->isKeyPressed("up") == true) {
-                printf("UP ===> OK\n");
                 _pos.second -= 30;
         }
         if (_igraph->isKeyPressed("v") == true) {
-                printf("SHOOT ===> OK\n");
                 Shoot sho(_pos, _igraph);
                 _sho.push_back(sho);
         }

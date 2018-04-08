@@ -82,7 +82,6 @@ void Bug::setMush(std::vector< std::pair<int, int> > const &mush)
         _mush = mush;
 }
 
-
 void Bug::changePos()
 {
         for (auto &it : _part) {
@@ -95,6 +94,8 @@ void Bug::changePos()
                         break;
                 case Body::DIRECTION::DOWN: tmp.second += 30;
                         break;
+                case Body::DIRECTION::UP: tmp.second -= 30;
+                  break;
                 }
                 it.setPos(tmp);
         }
@@ -138,7 +139,6 @@ void Bug::splitBody(Body &body)
 {
         int i = 0;
         std::pair<int, int> pos;
-        int j;
 
         for (auto &it : _part) {
                 if (body.getPos() == it.getPos()) {
@@ -148,8 +148,6 @@ void Bug::splitBody(Body &body)
                           Bug tmp(_size - i, pos, Body::DIRECTION::LEFT, _igraph);
                           _cent.push_back(tmp);
                           tmp.setCent(_cent);
-                          printf("ahhhahaha\n");
-                          j = i;
                         }
                         else if (body.getDir() == Body::DIRECTION::LEFT) {
                           pos.first += 30;
@@ -157,7 +155,6 @@ void Bug::splitBody(Body &body)
                           //                          _cent.push_back(tmp);
                           //                          tmp.setCent(_cent);
                           _part.erase(_part.begin()+i);
-                          printf("ahhhahaha\n");
                         }
                 }
                 //                _part.erase(_part.begin()+i);
