@@ -11,12 +11,16 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <unordered_map>
+#include <map>
 #include <functional>
+#include <vector>
 #include <string>
 #include <iostream>
 #include "IGraphic.hpp"
 #include "SFML/SfmlSquare.hpp"
+#include "SFML/SfmlText.hpp"
 #include "SFML/SfmlManageSprite.hpp"
+#include "IShape.hpp"
 
 typedef std::function<void (std::pair<int, int>, std::pair<int, int>,
 		std::pair<std::string, std::string>, IGraphic::TYPE)> argsArea;
@@ -32,9 +36,10 @@ public:
 	bool clearWindow() override;
 	bool createArea(std::pair<int, int> dim, std::pair<int, int> pos,
 		std::pair<std::string, std::string> nameTex, TYPE type) override;
-	bool loop(void (*func)(void)) override;
+//	bool loop(void (*func)(void)) override;
 	std::pair<int, int> getpos(std::string name) override;
 	std::pair<int, int> getdim(std::string name) override;
+	IGraphic::TYPE getType(std::string name) override;
 	bool setpos(std::pair<int, int> pos, std::string name) override;
 	bool setdim(std::pair<int, int> dim, std::string name) override;
 	bool isKeyPressed(std::string key) override;
@@ -42,9 +47,14 @@ public:
 	bool deleteArea(std::string name) override;
 	bool changeTexture(std::string name, std::string path) override;
 	bool destroyWindow() override;
+	bool destroyAllArea() override;
 private:
 	void _strLower(std::string &str);
 	void _rectangle(std::pair<int, int> dim, std::pair<int, int> pos,
+		std::pair<std::string, std::string> nameTex, TYPE type);
+	void _text(std::pair<int, int> dim, std::pair<int, int> pos,
+		std::pair<std::string, std::string> nameTex, TYPE type);
+	void _circle(std::pair<int, int> dim, std::pair<int, int> pos,
 		std::pair<std::string, std::string> nameTex, TYPE type);
 	template<class T>
 	std::pair<int, int> _getPosT(std::string);
@@ -55,7 +65,7 @@ private:
 	template<class T>
 	bool _setDimT(std::pair<int, int> dim, std::string name);
 	template<class T>
-	bool _displayRec(std::string name);
+	bool _displayObjSfml(std::string name);
 	void _makeSpriteTex(std::pair<int, int> dim, std::pair<int, int> pos,
 		std::pair<std::string, std::string> nameTex, TYPE type);
 
@@ -70,17 +80,12 @@ private:
 	std::unordered_map<std::string, std::string> _mapTex;
 	std::unordered_map<std::string, int> _mapType;
 	// pour displayObj
-	std::unordered_map<std::string, IShape *> _mapDownCast;
+	std::vector< std::pair <std::string, IShape * > > _mapDownCast;
+	
 	std::unordered_map<int, argsArea> _pointerFunc;
 	// pour displayObj
 	// std::unordered_map<int, std::function<void (std::string)> > _downCast;
 // pour le type: sprite le framework doit savoir que ca correspond a -1
 };
-
-// extern "C" void libsf()
-// {
-// 	return (new sfmlFramework());
-// }
-
 
 #endif /* !_SFMLFRAMEWORK_HPP_ */
