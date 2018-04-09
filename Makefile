@@ -77,7 +77,7 @@ CXXFLAGS = -I./include
 
 CXXFLAGS += -Wall -Wextra -fPIC -std=c++14 -g3 -ldl
 
-all: graphicals games core
+all: core graphicals games
 
 graphicals: $(SFML) $(NCURSE) $(ALLEGRO)
 
@@ -101,7 +101,7 @@ $(ALLEGRO): $(OBJSALLEGRO)
 	$(CC) $(OBJSALLEGRO) -shared -o $(DIRLIB)$(ALLEGRO) -lallegro -lallegro_dialog -lallegro_font -lallegro_ttf -lallegro_primitives -lallegro_image
 
 $(NAME): $(OBJS)
-	 $(CC) $(OBJS) -o $(NAME) -ldl  -L./games/ $(LDFLAGSGAME)
+	 $(CC) $(OBJS) -o $(NAME) -ldl
 
 clean:
 	$(RM) $(OBJS)
